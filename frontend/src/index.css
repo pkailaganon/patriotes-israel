@@ -124,13 +124,15 @@
   }
 }
 
-/* Slogan styling */
+/* Slogan styling - high visibility version */
 .slogan-text {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: -0.05em;
-  line-height: 0.85;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  color: #002395;
+  text-shadow: 1px 1px 0 rgba(0, 35, 149, 0.1);
 }
 
 /* Countdown styling */

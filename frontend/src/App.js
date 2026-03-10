@@ -8,6 +8,7 @@ import Programme from "./pages/Programme";
 import Liste from "./pages/Liste";
 import Soutenir from "./pages/Soutenir";
 import Contact from "./pages/Contact";
+import MentionsLegales from "./pages/MentionsLegales";
 
 function App() {
   return (
@@ -28,8 +29,7 @@ function App() {
           <Route path="/liste" element={<Liste />} />
           <Route path="/soutenir" element={<Soutenir />} />
           <Route path="/contact" element={<Contact />} />
-          {/* Fallback for mentions légales - redirect to home */}
-          <Route path="/mentions-legales" element={<Home />} />
+          <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </BrowserRouter>

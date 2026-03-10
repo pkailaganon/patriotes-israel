@@ -50,7 +50,7 @@ const Home = () => {
               {/* Main Slogan */}
               <motion.h1
                 variants={fadeInUp}
-                className="slogan-text text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-fr-blue mb-6"
+                className="slogan-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-6"
                 data-testid="hero-slogan"
               >
                 {hero.slogan}

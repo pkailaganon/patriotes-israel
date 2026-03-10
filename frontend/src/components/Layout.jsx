@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import { navigation, assets, footer } from '../config/content';
+import { navigation, footer } from '../config/content';
+import { LogoHorizontal, LogoCompact } from './Logo';
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -35,17 +36,17 @@ export const Header = () => {
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+            className="hover:opacity-80 transition-opacity"
             data-testid="logo-link"
           >
-            <img
-              src={assets.logoMain}
-              alt="Avec les Patriotes d'Israël"
-              className="h-12 w-12 md:h-14 md:w-14 rounded-full object-cover shadow-md"
-            />
-            <span className="hidden sm:block font-serif font-bold text-fr-blue text-sm md:text-base leading-tight">
-              Avec les Patriotes<br />d'Israël
-            </span>
+            {/* Desktop logo */}
+            <div className="hidden sm:block">
+              <LogoHorizontal />
+            </div>
+            {/* Mobile logo */}
+            <div className="sm:hidden">
+              <LogoCompact />
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -139,15 +140,23 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {/* Logo & Slogan */}
           <div className="md:col-span-2">
-            <Link to="/" className="inline-flex items-center gap-3 mb-4">
-              <img
-                src={assets.logoMain}
-                alt="Avec les Patriotes d'Israël"
-                className="h-16 w-16 rounded-full object-cover"
-              />
-              <span className="font-serif font-bold text-xl">
-                Avec les Patriotes d'Israël
-              </span>
+            <Link to="/" className="inline-block mb-4">
+              <div className="flex items-center gap-3">
+                <div className="relative w-14 h-14 flex-shrink-0">
+                  <svg viewBox="0 0 100 100" className="w-full h-full">
+                    <circle cx="50" cy="50" r="48" fill="#002395" />
+                    <rect x="10" y="20" width="80" height="8" fill="white" />
+                    <rect x="10" y="72" width="80" height="8" fill="white" />
+                    <g transform="translate(50, 50)" fill="none" stroke="white" strokeWidth="3">
+                      <polygon points="0,-22 19,11 -19,11" />
+                      <polygon points="0,22 19,-11 -19,-11" />
+                    </g>
+                  </svg>
+                </div>
+                <span className="font-serif font-bold text-xl">
+                  Avec les Patriotes d'Israël
+                </span>
+              </div>
             </Link>
             <p className="text-slate-300 text-sm leading-relaxed max-w-lg">
               {footer.slogan}
