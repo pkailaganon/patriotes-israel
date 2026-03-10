@@ -1,0 +1,139 @@
+{
+  "identity": {
+    "name": "Avec les Patriotes d'Israël",
+    "tone": "Dignified, Strong, Patriotic, Modern, Institutional yet Bold",
+    "persona": "The French-Israeli bridge. Serious governance meets fighting spirit.",
+    "theme": "light",
+    "keywords": ["Rupture", "Dignity", "Patriotism", "Strength", "Community"]
+  },
+  "typography": {
+    "primary_font": "Plus Jakarta Sans",
+    "secondary_font": "Playfair Display",
+    "accent_font": "Barlow Condensed",
+    "scale": {
+      "h1": "text-5xl md:text-7xl font-serif font-bold tracking-tight leading-none",
+      "h2": "text-4xl md:text-5xl font-serif font-semibold tracking-tight",
+      "h3": "text-2xl md:text-3xl font-sans font-bold",
+      "body": "text-base md:text-lg font-sans leading-relaxed text-slate-700",
+      "caption": "text-sm font-sans font-medium uppercase tracking-widest text-slate-500",
+      "slogan": "text-6xl md:text-9xl font-accent font-black uppercase tracking-tighter leading-[0.8]"
+    },
+    "imports": [
+      "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Barlow+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
+    ]
+  },
+  "colors": {
+    "palette": {
+      "primary": {
+        "fr_blue": "#002395",
+        "il_blue": "#005EB8",
+        "fusion": "linear-gradient(135deg, #002395 0%, #005EB8 100%)"
+      },
+      "secondary": {
+        "republic_red": "#E1000F",
+        "gold": "#C5A065"
+      },
+      "neutral": {
+        "white": "#FFFFFF",
+        "off_white": "#F8FAFC",
+        "slate": "#1E293B",
+        "black": "#0F172A"
+      },
+      "functional": {
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "error": "#EF4444"
+      }
+    },
+    "usage": {
+      "background": "bg-slate-50",
+      "text_main": "text-slate-900",
+      "text_muted": "text-slate-600",
+      "primary_btn": "bg-[#002395] hover:bg-[#001b7a] text-white",
+      "accent_btn": "bg-[#E1000F] hover:bg-[#b8000c] text-white",
+      "gradient_text": "bg-clip-text text-transparent bg-gradient-to-r from-[#002395] to-[#005EB8]"
+    }
+  },
+  "visual_enhancers": {
+    "radius": "rounded-sm",
+    "shadows": {
+      "card": "shadow-[0_2px_8px_rgba(0,0,0,0.08)]",
+      "hover": "shadow-[0_12px_24px_rgba(0,35,149,0.15)]",
+      "glow": "shadow-[0_0_30px_rgba(0,94,184,0.3)]"
+    },
+    "borders": "border border-slate-200",
+    "glass": "bg-white/80 backdrop-blur-md border-white/20"
+  },
+  "layout_strategies": {
+    "container": "container mx-auto px-4 md:px-6 max-w-7xl",
+    "section_spacing": "py-20 md:py-32",
+    "grid_bento": "grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(200px,auto)]"
+  },
+  "assets": {
+    "images": {
+      "candidate_michel": "https://customer-assets.emergentagent.com/job_2934571f-b89c-4ca8-a056-0a3b936c2d41/artifacts/c3bsf8tv_IMG_0404.jpeg",
+      "logo_main": "https://customer-assets.emergentagent.com/job_2934571f-b89c-4ca8-a056-0a3b936c2d41/artifacts/c9wf62f0_8372dad5-63f1-4d83-bb31-848b152d3148.jpeg",
+      "logo_dates": "https://customer-assets.emergentagent.com/job_2934571f-b89c-4ca8-a056-0a3b936c2d41/artifacts/t2hm7oyx_9e9d3282-2d86-4326-919a-46b7f8ff196b.jpeg",
+      "hero_bg": "https://images.unsplash.com/photo-1563505380-61321dcff07c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwyfHx0ZWwlMjBhdml2JTIwY29hc3RsaW5lJTIwc3VubnklMjBkYXl8ZW58MHx8fHwxNzczMTYzODg3fDA&ixlib=rb-4.1.0&q=85",
+      "haifa_bg": "https://images.unsplash.com/photo-1769283431551-cedc0ec03314?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTJ8MHwxfHNlYXJjaHwzfHxoYWlmYSUyMGJhaGFpJTIwZ2FyZGVucyUyMHZpZXd8ZW58MHx8fHwxNzczMTYzODg4fDA&ixlib=rb-4.1.0&q=85",
+      "tel_aviv_bg": "https://images.unsplash.com/photo-1630427961419-c27cc29bd4da?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwxfHx0ZWwlMjBhdml2JTIwY29hc3RsaW5lJTIwc3VubnklMjBkYXl8ZW58MHx8fHwxNzczMTYzODg3fDA&ixlib=rb-4.1.0&q=85"
+    },
+    "icons": {
+      "library": "lucide-react",
+      "sets": ["Shield", "Flag", "Vote", "Users", "Megaphone", "CheckCircle2", "MapPin"]
+    }
+  },
+  "components": {
+    "header": {
+      "style": "sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200",
+      "nav_links": "font-medium text-slate-700 hover:text-[#002395] transition-colors uppercase tracking-wide text-sm"
+    },
+    "buttons": {
+      "primary": "rounded-none px-8 py-3 bg-[#002395] text-white font-bold uppercase tracking-wider hover:bg-[#001b7a] transition-all hover:scale-105 active:scale-95 shadow-lg",
+      "secondary": "rounded-none px-8 py-3 border-2 border-[#002395] text-[#002395] font-bold uppercase tracking-wider hover:bg-[#002395] hover:text-white transition-all"
+    },
+    "cards": {
+      "candidate": "bg-white border border-slate-100 p-0 overflow-hidden hover:shadow-xl transition-shadow group relative",
+      "feature": "p-8 bg-slate-50 border-l-4 border-[#002395] hover:bg-white hover:shadow-lg transition-all"
+    },
+    "countdown": {
+      "style": "font-accent text-5xl font-black text-[#002395]"
+    },
+    "forms": {
+      "input": "rounded-none border-slate-300 focus:ring-2 focus:ring-[#002395] focus:border-transparent bg-slate-50",
+      "label": "font-bold text-slate-700 uppercase text-xs tracking-wider mb-2 block"
+    }
+  },
+  "page_specifics": {
+    "home": {
+      "hero_headline": "RUPTURE AVEC LA SOUMISSION",
+      "hero_sub": "Élections Consulaires 2026 — Tel-Aviv & Haïfa",
+      "hero_layout": "Split screen or heavy typography overlay on dimmed background"
+    },
+    "program": {
+      "layout": "Zig-zag layout or Bento grid for the 4 commitments"
+    },
+    "donate": {
+      "presets": [18, 50, 100, 200],
+      "currency_toggle": "Switch component customized with ILS/EUR labels"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Install 'lucide-react', 'framer-motion', 'react-router-dom', 'clsx', 'tailwind-merge' if not present.",
+    "Use 'Barlow Condensed' font specifically for the 'RUPTURE' slogan to give it that 'Strike' impact.",
+    "The '18' amount in donation is symbolic (Chai - Life). Highlight it slightly.",
+    "Ensure the countdown timer targets May 30, 2026.",
+    "Use the provided Michel Ayach photo in the Hero or About section, ensure it's high quality and well cropped.",
+    "The footer must include legal disclaimers for political campaigning (placeholders like 'Mentions Légales').",
+    "For the 'Liste' page, separate candidates by Tel-Aviv and Haïfa regions visually.",
+    "Use the 'Israeli flag circular' logo in the header.",
+    "Animation: Use Framer Motion for entrance animations (fade-up) on scroll. Keep it subtle and dignified."
+  ],
+  "universal_guidelines": [
+    "Do not use generic gradients. Use the defined Fusion gradient only for key branding elements.",
+    "Avoid rounded corners > 4px. Keep it sharp and institutional.",
+    "Ensure high contrast for accessibility, especially with the blue text.",
+    "Mobile responsiveness is critical for campaign updates on the go.",
+    "Use 'sonner' for form submission success messages."
+  ]
+}
