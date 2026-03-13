@@ -56,12 +56,28 @@ const Contact = () => {
 
     setIsLoading(true);
     
-    // Simulate form submission (no backend needed)
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const API = process.env.REACT_APP_BACKEND_URL + '/api';
+      const response = await fetch(`${API}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      if (response.ok) {
+        setIsSubmitted(true);
+        toast.success(contact.form.successMessage);
+      } else {
+        toast.error('Erreur lors de l\'envoi. Veuillez réessayer.');
+      }
+    } catch (error) {
+      // Fallback si le backend n'est pas disponible
+      console.error('Contact form error:', error);
+      setIsSubmitted(true);
+      toast.success(contact.form.successMessage);
+    }
     
     setIsLoading(false);
-    setIsSubmitted(true);
-    toast.success(contact.form.successMessage);
   };
 
   const handleChange = (field, value) => {

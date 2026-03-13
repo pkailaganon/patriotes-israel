@@ -21,7 +21,7 @@ export const DonationForm = () => {
     return currency === 'EUR' ? Math.round(baseAmount / 4) : baseAmount;
   };
 
-  const handleDonate = () => {
+  const handleDonate = async () => {
     const amount = getFinalAmount();
     if (amount < 1) {
       toast.error('Veuillez sélectionner ou entrer un montant');
@@ -31,11 +31,37 @@ export const DonationForm = () => {
     // Convert to ILS for payment
     const ilsAmount = currency === 'EUR' ? amount * 4 : amount;
 
-    if (isPaymentConfigured()) {
-      // Redirect to HYP payment page
-      window.location.href = generatePaymentUrl(ilsAmount);
-    } else {
-      // Simulate success for demo
+    try {
+      // Record donation in backend
+      const API = process.env.REACT_APP_BACKEND_URL + '/api';
+      const response = await fetch(`${API}/donations`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: selectedAmount || parseInt(customAmount),
+          currency: currency
+        })
+      });
+      
+      if (response.ok) {
+        const donationData = await response.json();
+        
+        if (isPaymentConfigured()) {
+          // Redirect to HYP payment page with donation reference
+          window.location.href = generatePaymentUrl(ilsAmount);
+        } else {
+          // Simulate success for demo
+          toast.success('Don enregistré ! Redirection vers le paiement...');
+          setTimeout(() => {
+            setIsSuccess(true);
+          }, 1500);
+        }
+      } else {
+        toast.error('Erreur lors de l\'enregistrement');
+      }
+    } catch (error) {
+      console.error('Donation error:', error);
+      // Fallback - continue with payment flow
       toast.success('Redirection vers la page de paiement...');
       setTimeout(() => {
         setIsSuccess(true);

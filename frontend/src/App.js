@@ -9,6 +9,7 @@ import Liste from "./pages/Liste";
 import Soutenir from "./pages/Soutenir";
 import Contact from "./pages/Contact";
 import MentionsLegales from "./pages/MentionsLegales";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/soutenir" element={<Soutenir />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </BrowserRouter>
