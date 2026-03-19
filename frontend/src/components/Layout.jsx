@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import { navigation, assets, footer } from '../config/content';
+import { navigation, footer } from '../config/content';
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,33 +24,23 @@ export const Header = () => {
   return (
     <header
       data-testid="main-header"
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-md'
-          : 'bg-white/80 backdrop-blur-sm'
-      } border-b border-slate-200`}
+      className={`sticky top-0 z-50 transition-all duration-300 bg-[#27428F] ${
+        isScrolled ? 'shadow-lg' : ''
+      }`}
     >
       <div className="container-campaign">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+            className="flex items-center hover:opacity-90 transition-opacity"
             data-testid="logo-link"
           >
             <img
-              src={assets.logoMain}
+              src="https://customer-assets.emergentagent.com/job_ayach-2026/artifacts/y4unrepu_Patriotes.png"
               alt="Avec les Patriotes d'Israël"
-              className="h-12 w-12 md:h-14 md:w-14 rounded-full object-cover shadow-md"
+              className="h-10 md:h-12 w-auto"
             />
-            <div className="hidden sm:flex flex-col leading-tight">
-              <span className="font-sans font-bold text-fr-blue text-sm md:text-base tracking-tight uppercase">
-                Avec les Patriotes
-              </span>
-              <span className="font-sans font-bold text-il-blue text-sm md:text-base tracking-tight uppercase">
-                d'Israël
-              </span>
-            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -62,13 +52,13 @@ export const Header = () => {
                 data-testid={`nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                 className={`font-medium text-sm uppercase tracking-wide transition-colors relative group ${
                   location.pathname === item.path
-                    ? 'text-fr-blue'
-                    : 'text-slate-700 hover:text-fr-blue'
+                    ? 'text-white'
+                    : 'text-white/80 hover:text-white'
                 }`}
               >
                 {item.name}
                 <span
-                  className={`absolute -bottom-1 left-0 h-0.5 bg-fr-blue transition-all duration-300 ${
+                  className={`absolute -bottom-1 left-0 h-0.5 bg-white transition-all duration-300 ${
                     location.pathname === item.path ? 'w-full' : 'w-0 group-hover:w-full'
                   }`}
                 />
@@ -79,7 +69,7 @@ export const Header = () => {
           {/* CTA Button */}
           <Link
             to="/soutenir"
-            className="hidden md:block btn-accent text-xs md:text-sm py-2 px-4 md:px-6"
+            className="hidden md:block bg-republic-red hover:bg-red-700 text-white text-xs md:text-sm font-bold uppercase tracking-wider py-2 px-4 md:px-6 transition-all"
             data-testid="header-cta"
           >
             Soutenir
@@ -87,7 +77,7 @@ export const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2 text-slate-700 hover:text-fr-blue transition-colors"
+            className="lg:hidden p-2 text-white hover:text-white/80 transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             data-testid="mobile-menu-toggle"
             aria-label="Menu"
@@ -104,7 +94,7 @@ export const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white border-t border-slate-200 overflow-hidden"
+            className="lg:hidden bg-[#27428F] border-t border-white/20 overflow-hidden"
             data-testid="mobile-menu"
           >
             <nav className="container-campaign py-4 flex flex-col gap-2">
@@ -115,8 +105,8 @@ export const Header = () => {
                   data-testid={`mobile-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                   className={`py-3 px-4 font-medium uppercase tracking-wide transition-colors rounded-sm ${
                     location.pathname === item.path
-                      ? 'bg-fr-blue/10 text-fr-blue'
-                      : 'text-slate-700 hover:bg-slate-50'
+                      ? 'bg-white/20 text-white'
+                      : 'text-white/80 hover:bg-white/10 hover:text-white'
                   }`}
                 >
                   {item.name}
@@ -124,7 +114,7 @@ export const Header = () => {
               ))}
               <Link
                 to="/soutenir"
-                className="btn-accent text-center mt-2"
+                className="bg-republic-red hover:bg-red-700 text-white text-center font-bold uppercase tracking-wider py-3 px-4 mt-2 transition-all"
                 data-testid="mobile-cta"
               >
                 Soutenir la Campagne
@@ -144,15 +134,12 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {/* Logo & Slogan */}
           <div className="md:col-span-2">
-            <Link to="/" className="inline-flex items-center gap-3 mb-4">
+            <Link to="/" className="inline-block mb-4">
               <img
-                src={assets.logoMain}
+                src="https://customer-assets.emergentagent.com/job_ayach-2026/artifacts/y4unrepu_Patriotes.png"
                 alt="Avec les Patriotes d'Israël"
-                className="h-16 w-16 rounded-full object-cover"
+                className="h-12 w-auto"
               />
-              <span className="font-sans font-bold text-xl uppercase tracking-tight">
-                Avec les Patriotes d'Israël
-              </span>
             </Link>
             <p className="text-slate-300 text-sm leading-relaxed max-w-lg">
               {footer.slogan}
