@@ -42,12 +42,15 @@ const Soutenir = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
+              className="flex justify-center"
             >
-              <img
-                src={assets.logoDates}
-                alt="Avec les Patriotes d'Israël - Élections 2026"
-                className="w-64 h-64 md:w-80 md:h-80 mx-auto rounded-full shadow-2xl"
-              />
+              <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl bg-white flex items-center justify-center p-2">
+                <img
+                  src={assets.logoDates}
+                  alt="Avec les Patriotes d'Israël - Élections 2026"
+                  className="w-full h-full object-contain"
+                />
+              </div>
             </motion.div>
           </div>
         </div>
