@@ -9,8 +9,8 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-        serif: ['Playfair Display', 'Georgia', 'serif'],
-        accent: ['Barlow Condensed', 'sans-serif'],
+        serif: ['Oswald', 'sans-serif'],
+        accent: ['Oswald', 'sans-serif'],
       },
       colors: {
         // Campaign colors
