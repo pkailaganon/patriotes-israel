@@ -1,7 +1,9 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Depends, Query
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Query, Request
+from fastapi.responses import RedirectResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
@@ -15,6 +17,35 @@ from datetime import datetime, timezone
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
+# Canonical domain configuration
+CANONICAL_DOMAIN = os.environ.get('CANONICAL_DOMAIN', 'patriotes-israel.com')
+
+# Canonical domain redirect middleware
+class CanonicalDomainMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        host = request.headers.get('host', '').split(':')[0]  # Remove port if present
+        
+        # Skip redirect if already on canonical domain
+        if host == CANONICAL_DOMAIN:
+            return await call_next(request)
+        
+        # Skip redirect for API routes and health checks
+        path = request.url.path
+        if path.startswith('/api') or path == '/health' or path == '/healthz':
+            return await call_next(request)
+        
+        # Skip for localhost/development
+        if host in ('localhost', '127.0.0.1', '') or host.endswith('.preview.emergentagent.com'):
+            return await call_next(request)
+        
+        # Build canonical URL preserving path and query string
+        canonical_url = f"https://{CANONICAL_DOMAIN}{request.url.path}"
+        if request.url.query:
+            canonical_url += f"?{request.url.query}"
+        
+        # Return 301 permanent redirect
+        return RedirectResponse(url=canonical_url, status_code=301)
+
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
@@ -22,6 +53,9 @@ db = client[os.environ['DB_NAME']]
 
 # Create the main app without a prefix
 app = FastAPI(title="Avec les Patriotes d'Israël - API")
+
+# Add canonical domain redirect middleware (runs before other middleware)
+app.add_middleware(CanonicalDomainMiddleware)
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
