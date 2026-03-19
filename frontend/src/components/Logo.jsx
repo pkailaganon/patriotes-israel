@@ -6,7 +6,7 @@ export const LogoHorizontal = ({ className = "" }) => {
       <div className="relative w-10 h-10 md:w-12 md:h-12 flex-shrink-0">
         <svg viewBox="0 0 100 100" className="w-full h-full">
           {/* Blue circle background */}
-          <circle cx="50" cy="50" r="48" fill="#002395" />
+          <circle cx="50" cy="50" r="48" fill="#27428F" />
           {/* White and blue stripes */}
           <rect x="10" y="20" width="80" height="8" fill="white" />
           <rect x="10" y="72" width="80" height="8" fill="white" />
@@ -37,7 +37,7 @@ export const LogoCompact = ({ className = "" }) => {
     <div className={`flex items-center gap-2 ${className}`}>
       <div className="relative w-10 h-10 flex-shrink-0">
         <svg viewBox="0 0 100 100" className="w-full h-full">
-          <circle cx="50" cy="50" r="48" fill="#002395" />
+          <circle cx="50" cy="50" r="48" fill="#27428F" />
           <rect x="10" y="20" width="80" height="8" fill="white" />
           <rect x="10" y="72" width="80" height="8" fill="white" />
           <g transform="translate(50, 50)" fill="none" stroke="white" strokeWidth="3">

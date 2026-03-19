@@ -7,8 +7,8 @@
 @layer base {
   :root {
     /* Campaign Colors */
-    --fr-blue: 227 100% 29%;
-    --il-blue: 206 100% 36%;
+    --fr-blue: 224 42% 36%;
+    --il-blue: 224 42% 36%;
     --republic-red: 356 100% 44%;
     --gold: 36 37% 58%;
     
@@ -19,7 +19,7 @@
     --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-    --primary: 227 100% 29%;
+    --primary: 224 42% 36%;
     --primary-foreground: 0 0% 100%;
     --secondary: 210 40% 96%;
     --secondary-foreground: 222 47% 11%;
@@ -31,12 +31,12 @@
     --destructive-foreground: 0 0% 100%;
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 227 100% 29%;
+    --ring: 224 42% 36%;
     --radius: 0.125rem;
     
     /* Chart colors */
-    --chart-1: 227 100% 29%;
-    --chart-2: 206 100% 36%;
+    --chart-1: 224 42% 36%;
+    --chart-2: 224 42% 36%;
     --chart-3: 356 100% 44%;
     --chart-4: 36 37% 58%;
     --chart-5: 215 16% 47%;
@@ -84,18 +84,18 @@
   }
   
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#002395] to-[#005EB8];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#27428F] to-[#27428F];
   }
   
   .btn-primary {
-    @apply px-8 py-3 bg-[#002395] text-white font-bold uppercase tracking-wider 
-           hover:bg-[#001b7a] transition-all duration-300 hover:scale-105 active:scale-95 
+    @apply px-8 py-3 bg-[#27428F] text-white font-bold uppercase tracking-wider 
+           hover:bg-[#1e3470] transition-all duration-300 hover:scale-105 active:scale-95 
            shadow-lg rounded-sm;
   }
   
   .btn-secondary {
-    @apply px-8 py-3 border-2 border-[#002395] text-[#002395] font-bold uppercase tracking-wider 
-           hover:bg-[#002395] hover:text-white transition-all duration-300 rounded-sm;
+    @apply px-8 py-3 border-2 border-[#27428F] text-[#27428F] font-bold uppercase tracking-wider 
+           hover:bg-[#27428F] hover:text-white transition-all duration-300 rounded-sm;
   }
   
   .btn-accent {
@@ -131,8 +131,8 @@
   text-transform: uppercase;
   letter-spacing: -0.02em;
   line-height: 0.95;
-  color: #002395;
-  text-shadow: 1px 1px 0 rgba(0, 35, 149, 0.1);
+  color: #27428F;
+  text-shadow: 1px 1px 0 rgba(39, 66, 143, 0.1);
 }
 
 /* Countdown styling */

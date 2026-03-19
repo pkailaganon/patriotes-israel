@@ -14,8 +14,8 @@ module.exports = {
       },
       colors: {
         // Campaign colors
-        'fr-blue': '#002395',
-        'il-blue': '#005EB8',
+        'fr-blue': '#27428F',
+        'il-blue': '#27428F',
         'republic-red': '#E1000F',
         'campaign-gold': '#C5A065',
         // Shadcn colors
