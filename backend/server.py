@@ -94,8 +94,10 @@ class ContactCreate(BaseModel):
     firstName: str
     lastName: str
     email: EmailStr
+    phone: Optional[str] = None
     message: str
-    joinList: bool = False
+    supportList: bool = False
+    helpRegister: bool = False
 
 class Contact(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -103,8 +105,10 @@ class Contact(BaseModel):
     firstName: str
     lastName: str
     email: str
+    phone: Optional[str] = None
     message: str
-    joinList: bool
+    supportList: bool = False
+    helpRegister: bool = False
     createdAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     read: bool = False
 
@@ -211,11 +215,13 @@ async def get_all_contacts(
 async def get_contacts_stats(admin: str = Depends(verify_admin)):
     total = await db.contacts.count_documents({})
     unread = await db.contacts.count_documents({"read": False})
-    want_to_join = await db.contacts.count_documents({"joinList": True})
+    want_to_support = await db.contacts.count_documents({"supportList": True})
+    need_help_register = await db.contacts.count_documents({"helpRegister": True})
     return {
         "total": total,
         "unread": unread,
-        "wantToJoin": want_to_join
+        "wantToSupport": want_to_support,
+        "needHelpRegister": need_help_register
     }
 
 @api_router.patch("/admin/contacts/{contact_id}/read")

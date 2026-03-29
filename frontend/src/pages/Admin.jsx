@@ -107,7 +107,7 @@ const StatsCard = ({ icon: Icon, label, value, subValue, color = "fr-blue" }) =>
 
 const ContactsTable = ({ auth }) => {
   const [contacts, setContacts] = useState([]);
-  const [stats, setStats] = useState({ total: 0, unread: 0, wantToJoin: 0 });
+  const [stats, setStats] = useState({ total: 0, unread: 0, wantToSupport: 0, needHelpRegister: 0 });
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
 
@@ -175,10 +175,11 @@ const ContactsTable = ({ auth }) => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <StatsCard icon={Mail} label="Total Messages" value={stats.total} />
         <StatsCard icon={Eye} label="Non lus" value={stats.unread} color="republic-red" />
-        <StatsCard icon={Users} label="Veulent rejoindre" value={stats.wantToJoin} color="il-blue" />
+        <StatsCard icon={Users} label="Veulent soutenir" value={stats.wantToSupport} color="il-blue" />
+        <StatsCard icon={Users} label="Aide inscription" value={stats.needHelpRegister} color="campaign-gold" />
       </div>
 
       <div className="bg-white border border-slate-200">
@@ -211,17 +212,22 @@ const ContactsTable = ({ auth }) => {
                 className={`p-4 ${!contact.read ? 'bg-blue-50/50' : ''}`}
               >
                 <div className="flex justify-between items-start mb-2">
-                  <div>
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="font-bold text-slate-900">
                       {contact.firstName} {contact.lastName}
                     </span>
-                    {contact.joinList && (
-                      <span className="ml-2 text-xs bg-il-blue text-white px-2 py-0.5 rounded">
-                        Veut rejoindre
+                    {contact.supportList && (
+                      <span className="text-xs bg-il-blue text-white px-2 py-0.5 rounded">
+                        Veut soutenir
+                      </span>
+                    )}
+                    {contact.helpRegister && (
+                      <span className="text-xs bg-campaign-gold text-white px-2 py-0.5 rounded">
+                        Aide inscription
                       </span>
                     )}
                     {!contact.read && (
-                      <span className="ml-2 text-xs bg-republic-red text-white px-2 py-0.5 rounded">
+                      <span className="text-xs bg-republic-red text-white px-2 py-0.5 rounded">
                         Nouveau
                       </span>
                     )}
@@ -236,7 +242,10 @@ const ContactsTable = ({ auth }) => {
                     })}
                   </span>
                 </div>
-                <p className="text-sm text-slate-600 mb-1">{contact.email}</p>
+                <p className="text-sm text-slate-600 mb-1">
+                  {contact.email}
+                  {contact.phone && <span className="ml-3">📞 {contact.phone}</span>}
+                </p>
                 <p className="text-slate-700 text-sm bg-slate-50 p-3 rounded mt-2">
                   {contact.message}
                 </p>

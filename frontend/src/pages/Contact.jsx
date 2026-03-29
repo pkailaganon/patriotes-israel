@@ -15,8 +15,10 @@ const Contact = () => {
     firstName: '',
     lastName: '',
     email: '',
+    phone: '',
     message: '',
-    joinList: false,
+    supportList: false,
+    helpRegister: false,
   });
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -113,8 +115,10 @@ const Contact = () => {
                     firstName: '',
                     lastName: '',
                     email: '',
+                    phone: '',
                     message: '',
-                    joinList: false,
+                    supportList: false,
+                    helpRegister: false,
                   });
                 }}
                 variant="outline"
@@ -236,6 +240,21 @@ const Contact = () => {
                   )}
                 </div>
 
+                {/* Phone */}
+                <div className="mb-6">
+                  <Label htmlFor="phone" className="text-xs uppercase tracking-wider font-bold text-slate-700 mb-2 block">
+                    Téléphone
+                  </Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => handleChange('phone', e.target.value)}
+                    className="rounded-sm h-12"
+                    data-testid="input-phone"
+                  />
+                </div>
+
                 {/* Message */}
                 <div className="mb-6">
                   <Label htmlFor="message" className="text-xs uppercase tracking-wider font-bold text-slate-700 mb-2 block">
@@ -254,18 +273,33 @@ const Contact = () => {
                   )}
                 </div>
 
-                {/* Join List Checkbox */}
-                <div className="mb-8">
+                {/* Checkboxes */}
+                <div className="mb-8 space-y-4">
+                  {/* Support List Checkbox */}
                   <div className="flex items-start gap-3">
                     <Checkbox
-                      id="joinList"
-                      checked={formData.joinList}
-                      onCheckedChange={(checked) => handleChange('joinList', checked)}
+                      id="supportList"
+                      checked={formData.supportList}
+                      onCheckedChange={(checked) => handleChange('supportList', checked)}
                       className="mt-0.5"
-                      data-testid="checkbox-join"
+                      data-testid="checkbox-support"
                     />
-                    <Label htmlFor="joinList" className="text-sm text-slate-600 cursor-pointer">
-                      {contact.form.joinList}
+                    <Label htmlFor="supportList" className="text-sm text-slate-600 cursor-pointer">
+                      Je souhaite soutenir la liste avec les patriotes d'Israël
+                    </Label>
+                  </div>
+
+                  {/* Help Register Checkbox */}
+                  <div className="flex items-start gap-3">
+                    <Checkbox
+                      id="helpRegister"
+                      checked={formData.helpRegister}
+                      onCheckedChange={(checked) => handleChange('helpRegister', checked)}
+                      className="mt-0.5"
+                      data-testid="checkbox-register"
+                    />
+                    <Label htmlFor="helpRegister" className="text-sm text-slate-600 cursor-pointer">
+                      Je souhaite de l'aide pour m'inscrire dans le registre
                     </Label>
                   </div>
                 </div>

@@ -99,17 +99,24 @@ const Home = () => {
               <div className="relative aspect-[4/5] overflow-hidden shadow-2xl">
                 <img
                   src={assets.candidateMichel}
-                  alt="Michel Ayach"
+                  alt="Professeur Michael Ayache"
                   className="w-full h-full object-cover"
                   data-testid="hero-image"
                 />
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-fr-blue/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#13244b]/90 via-[#13244b]/40 to-transparent" />
                 
                 {/* Name Badge */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <p className="font-serif text-2xl md:text-3xl font-bold">Michel (Michael) Ayach</p>
-                  <p className="text-white/80 text-sm uppercase tracking-wider mt-1">Tête de Liste</p>
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white text-center">
+                  <p className="font-accent text-lg md:text-xl lg:text-2xl font-semibold uppercase tracking-wide mb-1">
+                    « AVEC LES PATRIOTES D'ISRAËL »
+                  </p>
+                  <p className="font-accent text-base md:text-lg uppercase tracking-wider text-white/90">
+                    Tête de Liste
+                  </p>
+                  <p className="font-accent text-xl md:text-2xl lg:text-3xl font-bold uppercase tracking-wide mt-2">
+                    Professeur Michael Ayache
+                  </p>
                 </div>
               </div>
 

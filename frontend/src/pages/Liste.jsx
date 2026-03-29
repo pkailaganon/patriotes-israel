@@ -114,14 +114,14 @@ const Liste = () => {
                 Un Leader pour les Français d'Israël
               </h2>
               <p className="text-slate-600 text-lg leading-relaxed">
-                Michel (Michael) Ayach incarne la rupture avec la soumission. Engagé, déterminé, il porte la voix de ceux qui refusent d'être traités comme des figurants par l'administration française.
+                Le Professeur Michael Ayache incarne la rupture avec la soumission. Engagé, déterminé, il porte la voix de ceux qui refusent d'être traités comme des figurants par l'administration française.
               </p>
               <blockquote className="border-l-4 border-fr-blue pl-6 py-2 italic text-slate-700">
                 « Nous ne sommes ni des sujets, ni des supplétifs. Nous sommes des citoyens français fiers d'être Israéliens. »
               </blockquote>
               <Link to="/soutenir">
                 <Button className="btn-primary mt-4" data-testid="liste-cta">
-                  Soutenir Michel Ayach
+                  Soutenir le Professeur Michael Ayache
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>

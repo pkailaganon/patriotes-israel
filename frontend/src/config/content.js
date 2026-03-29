@@ -83,9 +83,9 @@ export const candidates = {
   subtitle: "Avec les Patriotes d'Israël",
   teteDeListeTitle: "Tête de Liste",
   teteDeListe: {
-    name: "Michel (Michael) Ayach",
+    name: "Professeur Michael Ayache",
     role: "Tête de Liste - Tel-Aviv & Haïfa",
-    bio: "Engagé pour les Français d'Israël, Michel Ayach porte la voix de ceux qui refusent la soumission. Fier d'être Français, fier d'être Israélien.",
+    bio: "Engagé pour les Français d'Israël, le Professeur Michael Ayache porte la voix de ceux qui refusent la soumission. Fier d'être Français, fier d'être Israélien.",
     image: assets.candidateMichel,
   },
   telAviv: {

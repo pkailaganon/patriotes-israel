@@ -26,7 +26,7 @@ const MentionsLegales = () => {
                     <strong>Liste :</strong> Avec les Patriotes d'Israël
                   </p>
                   <p className="text-slate-600 mb-2">
-                    <strong>Tête de liste :</strong> Michel (Michael) Ayach
+                    <strong>Tête de liste :</strong> Professeur Michael Ayache
                   </p>
                   <p className="text-slate-600 mb-2">
                     <strong>Circonscription :</strong> Tel-Aviv & Haïfa
@@ -49,7 +49,7 @@ const MentionsLegales = () => {
                   Directeur de la publication
                 </h2>
                 <p className="text-slate-600">
-                  Michel (Michael) Ayach, en qualité de tête de liste "Avec les Patriotes d'Israël" pour les élections consulaires 2026.
+                  Professeur Michael Ayache, en qualité de tête de liste "Avec les Patriotes d'Israël" pour les élections consulaires 2026.
                 </p>
               </section>
 

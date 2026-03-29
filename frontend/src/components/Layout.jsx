@@ -4,6 +4,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { navigation, footer } from '../config/content';
 
+// Announcement Bar Component
+export const AnnouncementBar = () => {
+  return (
+    <div className="bg-[#13244b] text-white py-2 px-4" data-testid="announcement-bar">
+      <p className="font-accent text-xs sm:text-sm md:text-base text-center uppercase tracking-wide font-semibold">
+        <span className="hidden sm:inline">ÉLECTIONS CONSULAIRES 2026 | 22-27 MAI : VOTE EN LIGNE, 31 MAI : VOTE À L'URNE</span>
+        <span className="sm:hidden">ÉLECTIONS 2026 | 22-27 MAI EN LIGNE • 31 MAI À L'URNE</span>
+      </p>
+    </div>
+  );
+};
+
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -184,6 +196,7 @@ export const Footer = () => {
 export const Layout = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col selection-primary">
+      <AnnouncementBar />
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
