@@ -196,13 +196,13 @@ export const Footer = () => {
 export const Layout = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col selection-primary">
-      {/* Fixed wrapper for both announcement bar and header */}
-      <div className="fixed top-0 left-0 right-0 z-50">
+      {/* Fixed wrapper for both announcement bar and header - iOS compatible */}
+      <div className="ios-fixed-header">
         <AnnouncementBar />
         <Header />
       </div>
       {/* Spacer to account for fixed header height */}
-      <div className="h-[100px] sm:h-[108px] md:h-[116px]" />
+      <div className="h-[100px] sm:h-[108px] md:h-[116px] flex-shrink-0" />
       <main className="flex-1">{children}</main>
       <Footer />
     </div>

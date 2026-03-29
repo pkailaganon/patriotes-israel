@@ -50,11 +50,15 @@
   
   html {
     scroll-behavior: smooth;
+    /* iOS scroll fix */
+    -webkit-overflow-scrolling: touch;
   }
   
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    /* Prevent iOS rubber-band effect from affecting fixed header */
+    overscroll-behavior-y: none;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -122,6 +126,20 @@
   .selection-primary {
     @apply selection:bg-[#002395] selection:text-white;
   }
+}
+
+/* iOS fixed header fix */
+.ios-fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 /* Slogan styling - DIN Condensed style with Oswald */
