@@ -9,8 +9,8 @@ export const AnnouncementBar = () => {
   return (
     <div className="bg-[#13244b] text-white py-2 px-4" data-testid="announcement-bar">
       <p className="font-accent text-xs sm:text-sm md:text-base text-center uppercase tracking-wide font-semibold">
-        <span className="hidden sm:inline">ÉLECTIONS CONSULAIRES 2026 | 22-27 MAI : VOTE EN LIGNE, 31 MAI : VOTE À L'URNE</span>
-        <span className="sm:hidden">ÉLECTIONS CONSULAIRES 2026 | 22-27 MAI EN LIGNE • 31 MAI À L'URNE</span>
+        <span className="hidden sm:inline">ÉLECTIONS CONSULAIRES 2026 | LISTE N°6 | 21-27 MAI : VOTE EN LIGNE · 31 MAI : VOTE À L'URNE</span>
+        <span className="sm:hidden">LISTE N°6 · 21-27 MAI EN LIGNE · 31 MAI URNE</span>
       </p>
     </div>
   );
