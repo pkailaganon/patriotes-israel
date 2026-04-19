@@ -29,6 +29,18 @@ Site de campagne pour les élections consulaires françaises 2026 à Tel-Aviv et
 - [x] Design institutionnel avec logo circulaire officiel
 - [x] Mobile-first, responsive
 
+## What's Been Implemented — Session 1/3 TERMINÉE (Avr 2026)
+
+### Refonte architecturale complète (branche feature/refonte-architecture)
+- App.js mis à jour : 9 routes actives + Navigate redirects (/programme→/valeurs-programme, /liste→/equipe)
+- 6 nouvelles pages : PourquoiNous, ValeursProgramme, CommentVoter, Equipe, EngagementsFAQ, CandidatePage (/equipe/:slug)
+- CandidateModal.jsx : modal animée framer-motion, accessible (Escape, focus)
+- content.js restructuré : 17 sections dans l'ordre prescrit, toutes les données squelette
+- Dossiers images créés : /public/images/candidates/, campaign/, logos/
+- SVG silhouette Katy Bisraor : /public/images/candidates/04-bisraor.svg
+- PROJECT_MEMORY.md créé à la racine
+- Testing 100% : toutes routes, redirections, modal, navigation desktop/mobile
+
 ## What's Been Implemented (Jan 2026)
 1. **Homepage**: Hero "RUPTURE AVEC LA SOUMISSION", countdown, valeurs
 2. **Programme**: 4 engagements avec design Bento grid
