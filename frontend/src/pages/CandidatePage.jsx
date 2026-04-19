@@ -48,7 +48,7 @@ const CandidatePage = () => {
 
             <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
               {/* Photo */}
-              <div className="w-40 h-40 md:w-56 md:h-56 flex-shrink-0 overflow-hidden bg-white/10 relative">
+              <div className="w-40 md:w-56 aspect-square flex-shrink-0 overflow-hidden bg-white/10 relative">
                 {candidate.photo && !candidate.useSilhouette ? (
                   <img
                     src={candidate.photo}
