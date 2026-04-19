@@ -23,11 +23,11 @@ export const assets = {
 // 3. NAVIGATION
 export const navigation = [
   { name: "Accueil", path: "/" },
-  { name: "Pourquoi nous", path: "/pourquoi-nous" },
-  { name: "Valeurs & Programme", path: "/valeurs-programme" },
-  { name: "Comment voter", path: "/comment-voter" },
+  { name: "Pourquoi", path: "/pourquoi-nous" },
+  { name: "Programme", path: "/valeurs-programme" },
+  { name: "Voter", path: "/comment-voter" },
   { name: "L'équipe", path: "/equipe" },
-  { name: "Engagements & FAQ", path: "/engagements-faq" },
+  { name: "FAQ", path: "/engagements-faq" },
   { name: "Contact", path: "/contact" },
 ];
 
