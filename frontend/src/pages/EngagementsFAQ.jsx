@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Layout } from '../components/Layout';
+import { SEO } from '../components/SEO';
 import { solemnCommitments, faqItems, lexicon } from '../config/content';
 import { Button } from '../components/ui/button';
 import {
@@ -14,6 +15,10 @@ import {
 const EngagementsFAQ = () => {
   return (
     <Layout>
+      <SEO
+        title="Engagements & FAQ — Liste N°6 — Patriotes d'Israël"
+        description="5 engagements solennels, FAQ complète (10 Q/R) et lexique électoral pour les élections consulaires 2026 (Tel-Aviv / Haïfa)."
+      />
       {/* Hero */}
       <section className="py-16 md:py-24 bg-slate-50 border-b border-slate-200" data-testid="engagements-hero">
         <div className="container-campaign">

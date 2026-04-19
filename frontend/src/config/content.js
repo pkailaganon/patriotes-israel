@@ -414,9 +414,10 @@ export const candidatesList = [
     numero: 18,
     nom: "Rosine Esther Laloum",
     slug: "rosine-laloum",
-    photo: "/images/candidates/18-laloum.webp",
+    photo: "/images/candidates/18-laloum.svg",
     accroche: "Biographie à venir",
     bioFull: "Biographie à venir.",
+    useSilhouette: true,
   },
 ];
 

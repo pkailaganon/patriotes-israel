@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { Layout } from '../components/Layout';
+import { SEO } from '../components/SEO';
 import { valuesDetailed, actionSheets } from '../config/content';
 import { Button } from '../components/ui/button';
 
@@ -13,6 +14,10 @@ const fadeInUp = {
 const ValeursProgramme = () => {
   return (
     <Layout>
+      <SEO
+        title="Valeurs & Programme — Liste N°6 — Avec les Patriotes d'Israël"
+        description="Nos 5 valeurs et 5 fiches action pour les Français d'Israël : défense, transparence, indépendance, représentativité, action terrain."
+      />
       {/* Hero */}
       <section className="py-16 md:py-24 bg-slate-50 border-b border-slate-200" data-testid="valeurs-hero">
         <div className="container-campaign">

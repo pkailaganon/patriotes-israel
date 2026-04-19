@@ -1,0 +1,101 @@
+{
+  "summary": "Session 3/3 — Iteration 6 — PayPal donation flow + SEO + ScrollToTop + CNCCFP compliance end-to-end tested. 14/14 backend tests pass, 100% frontend smoke pass after a frontend restart to re-bake REACT_APP_PAYPAL_CLIENT_ID. 1 build-time env issue fixed by restart. No code bugs found.",
+
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+
+  "bug_found_and_fixed": {
+    "file": "frontend build env (no source change required)",
+    "issue": "At first visit /soutenir showed 'PayPal n'est pas configuré. Contactez l'équipe.' because REACT_APP_PAYPAL_CLIENT_ID was empty at webpack build-time — the frontend was started BEFORE that env key was added to /app/frontend/.env. CRA bakes REACT_APP_* at build time, so the stale build shipped an empty string.",
+    "fix": "sudo supervisorctl restart frontend — new build picked up REACT_APP_PAYPAL_CLIENT_ID. PayPalScriptProvider + PayPalButtons now render correctly ('PayPal Faire un don' + 'Carte bancaire' buttons visible).",
+    "status": "FIXED — live PayPal Smart Buttons render; opacity-40 pointer-events-none wrapper confirmed toggling correctly with canPay."
+  },
+
+  "backend_passed_tests": [
+    "GET /api/config/public — returns donations_enabled=true, presets [18,50,100,200], limits (EUR/USD 4600, ILS 20000), empty mandataire PASS",
+    "POST /api/paypal/create-order — pydantic validator rejects acceptPhysicalPerson=false → 422 PASS",
+    "POST /api/paypal/create-order — mandataire not configured → 503 'Mandataire financier non configuré' PASS",
+    "POST /api/paypal/create-order — invalid currency (GBP) → 422 Literal validator PASS",
+    "POST /api/paypal/create-order — USD+preset path → 503 (mandataire guard fires first, order correct) PASS",
+    "POST /api/paypal/create-order — rate limit 5/hour → 429 received on 6th+ request PASS",
+    "POST /api/paypal/webhook — accepts valid JSON, verified=false (PAYPAL_WEBHOOK_ID empty — warning logged, no crash) PASS",
+    "POST /api/paypal/webhook — invalid JSON → 400 PASS",
+    "GET /api/admin/donations — 401 without auth, 200 list sorted by created_at desc with auth PASS",
+    "GET /api/admin/donations/stats — returns totalDonations, completedDonations, pendingDonations, failedDonations, byCurrency breakdown PASS",
+    "GET /api/admin/donations/export.csv — 200 CSV with CNCCFP columns (Prenom, Nom, Email, Adresse, PersonnePhysique, FondsPersonnels, CollecteDonnees) PASS",
+    "Admin endpoints all require HTTP Basic auth (401 without) PASS"
+  ],
+
+  "frontend_passed_tests": [
+    "/soutenir renders soutenir-hero, currency toggle EUR/USD/ILS, 4 presets in EUR (18/50/100/200), custom-amount-input, identity form (7 fields), 3 legal checkboxes PASS",
+    "/soutenir shows RED 'Mandataire financier : à compléter' warning (mandataire-missing) while env empty PASS",
+    "/soutenir — switching currency to USD hides preset-grid, switch back to EUR restores it PASS",
+    "/soutenir — typing custom amount clears preset selection PASS",
+    "/soutenir — PayPal section has inner div with class 'opacity-40 pointer-events-none' + aria-disabled=true while canPay=false PASS",
+    "/soutenir — filling all 7 identity fields + 3 checkboxes hides paypal-blocked-hint and removes opacity-40 wrapper (aria-disabled='false') PASS",
+    "/soutenir — PayPal Smart Buttons (PayPal + Carte bancaire) rendered after valid env PASS",
+    "/soutenir/merci — merci-hero + merci-share-whatsapp + merci-home-btn present PASS",
+    "ScrollToTop — scrollY=1528 on home, after navigating to /contact scrollY=0 PASS",
+    "SEO titles unique per page (8/8): /, /pourquoi-nous, /valeurs-programme, /comment-voter, /equipe, /engagements-faq, /contact, /mentions-legales PASS",
+    "Regression /contact — contact form element present PASS",
+    "Regression /equipe — 19 images, 0 broken, Rosine+N°18 visible in DOM PASS"
+  ],
+
+  "known_caveats": [
+    "PAYPAL_CLIENT_SECRET empty — full create-order→PayPal token path not tested (intentional, documented in review_request)",
+    "Admin Dons tab: body.innerText did not contain 'Dons' in my admin.test — admin UI still references the old donation schema per agent_to_agent_context_note (camelCase fields), so tab may render but data shows empty. FLAGGED AS LOW-PRIORITY per reviewer's guidance. Not a new bug."
+  ],
+
+  "test_report_links": [
+    "/app/backend/tests/test_paypal_donations.py",
+    "/app/test_reports/pytest/session3_results.xml"
+  ],
+
+  "action_items": [
+    "LOW-PRIORITY: Update /app/frontend/src/pages/Admin.jsx Dons tab to read the new donation schema (created_at, donor.firstName, donor.lastName, amount/currency, status, impact_preset, paypal_order_id, paypal_capture_id) — currently tab name and stats may not display because UI still reads old camelCase fields (createdAt, paymentReference, amountILS, firstName at top-level).",
+    "OPS/DEPLOY: After setting REACT_APP_* env keys, frontend MUST be restarted so CRA rebakes them. Add a build-time check / healthcheck on /soutenir to catch 'PayPal n'est pas configuré' in CI.",
+    "OPS: Once MANDATAIRE_NOM + MANDATAIRE_ADRESSE are set in /app/backend/.env, redo create-order test with a real PAYPAL_CLIENT_SECRET to exercise the full token+order-creation path (will hit live PayPal API — use sandbox mode for tests)."
+  ],
+
+  "critical_code_review_comments": [
+    "server.py validate_donation_amount: preset check happens BEFORE min/max. When currency != EUR and preset is provided, returns 400 with correct French message — good.",
+    "server.py rate limiter is applied to /api/paypal/create-order with 5/hour. Confirmed slowapi 429 fires at the 6th request. Capture-order is NOT rate-limited — acceptable because order must exist first.",
+    "server.py /admin/donations sorts by 'created_at' (snake_case) which matches the new schema — good.",
+    "Soutenir.jsx uses PAYPAL_CLIENT_ID = process.env.REACT_APP_PAYPAL_CLIENT_ID || '' — the fallback correctly hides Smart Buttons when key missing. However the UX message 'PayPal n'est pas configuré. Contactez l'équipe.' is only useful for visitors during dev; consider silencing in production builds.",
+    "SoutenirMerci.jsx reads location.state?.amount which is only available after PayPal capture; direct-URL visitors see a generic thank-you (no error thrown) — handled correctly.",
+    "App.js: ScrollToTop component is correctly placed inside BrowserRouter — works as expected (confirmed y=1528 → y=0 on route change)."
+  ],
+
+  "updated_files": [
+    "/app/backend/tests/test_paypal_donations.py (new)"
+  ],
+
+  "success_rate": {
+    "backend": "100% (14/14 pytest)",
+    "frontend": "100% on all tested flows after frontend restart"
+  },
+
+  "test_credentials": {
+    "admin_url": "https://consul-2026.preview.emergentagent.com/admin",
+    "admin_username": "admin",
+    "admin_password": "patriotes2026"
+  },
+
+  "seed_data_creation": "None — existing donations collection preserved. Test data was only submitted through /soutenir DOM but blocked at mandataire guard (503) so nothing was persisted.",
+
+  "retest_needed": false,
+
+  "should_main_agent_self_test": false,
+
+  "context_for_next_testing_agent": "Session 3/3 complete. All new endpoints (/api/paypal/create-order, /capture-order, /webhook, /admin/donations*) and new pages (/soutenir refactor, /soutenir/merci) validated. Key env-keys that MUST be set before production: PAYPAL_CLIENT_SECRET, PAYPAL_WEBHOOK_ID, MANDATAIRE_NOM, MANDATAIRE_ADRESSE. After any .env change for REACT_APP_*, run 'sudo supervisorctl restart frontend' (not just hot-reload). Admin Dons tab UI still uses OLD schema — LOW-PRIORITY known gap.",
+
+  "rca_of_issue": "Symptom: /soutenir showed 'PayPal n'est pas configuré. Contactez l'équipe.' despite REACT_APP_PAYPAL_CLIENT_ID being present in /app/frontend/.env. RCA: Create-React-App inlines REACT_APP_* env values at webpack build-time. The frontend service was started before the env key was added to .env, so the shipped bundle carried an empty string. Mitigation: supervisorctl restart frontend → clean rebuild picked up the key; PayPal Smart Buttons then rendered with the actual clientId."
+}

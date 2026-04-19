@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, User } from 'lucide-react';
 import { Layout } from '../components/Layout';
+import { SEO } from '../components/SEO';
 import { candidatesList } from '../config/content';
 import { Button } from '../components/ui/button';
 import { ShareWhatsApp } from '../components/ShareWhatsApp';
@@ -34,6 +35,12 @@ const CandidatePage = () => {
 
   return (
     <Layout>
+      <SEO
+        title={`${candidate.nom} — N°${candidate.numero} — Liste Patriotes d'Israël`}
+        description={candidate.accroche || `${candidate.nom} — candidat N°${candidate.numero} de la liste « Avec les Patriotes d'Israël » pour les élections consulaires 2026.`}
+        url={pageUrl}
+        type="profile"
+      />
       {/* Hero */}
       <section className="py-16 md:py-24 bg-[#13244b] text-white" data-testid="candidate-page-hero">
         <div className="container-campaign">

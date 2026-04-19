@@ -5,6 +5,7 @@ import {
   AlertCircle, FileText, Vote, Users
 } from 'lucide-react';
 import { Layout } from '../components/Layout';
+import { SEO } from '../components/SEO';
 import { Countdown } from '../components/Countdown';
 import { 
   hero, assets, siteConfig, keyFigures, fiveValues, 
@@ -34,6 +35,10 @@ const iconMap = {
 const Home = () => {
   return (
     <Layout>
+      <SEO
+        title="Avec les Patriotes d'Israël — Liste N°6 — Élections Consulaires 2026"
+        description="Liste N°6 pour les élections consulaires 2026 — 2e circo Tel-Aviv / Haïfa. Conduite par le Pr Michael Ayache. Indépendante des partis, pour la défense des Franco-Israéliens."
+      />
       {/* Hero Section */}
       <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-slate-50" data-testid="hero-section">
         {/* Background Pattern */}

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, AlertTriangle, MapPin, Clock, FileText } from 'lucide-react';
 import { Layout } from '../components/Layout';
+import { SEO } from '../components/SEO';
 import { 
   keyDates, lecInscription, voteInternetSteps, 
   pollingStations, regulatoryFrame 
@@ -18,6 +19,10 @@ import { ShareWhatsApp } from '../components/ShareWhatsApp';
 const CommentVoter = () => {
   return (
     <Layout>
+      <SEO
+        title="Comment voter — Élections Consulaires 2026 — Liste N°6"
+        description="Mode d'emploi complet : inscription LEC (24 avril), vote en ligne (21-27 mai), vote à l'urne (31 mai). Votez Liste N°6 « Avec les Patriotes d'Israël »."
+      />
       {/* Hero */}
       <section className="py-16 md:py-24 bg-slate-50 border-b border-slate-200" data-testid="voter-hero">
         <div className="container-campaign">
