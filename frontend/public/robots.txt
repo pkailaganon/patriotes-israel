@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /soutenir/merci
+
+Sitemap: https://patriotes-israel.com/sitemap.xml
