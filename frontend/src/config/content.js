@@ -278,7 +278,7 @@ export const candidatesList = [
         "Je vous invite à faire entendre votre voix par le vote en ligne ou en venant voter à l'urne le jour du scrutin. Ne laissez pas d'autres décider à votre place.",
       ],
       signature: "Professeur Michael Ayache",
-      signatureRole: "Tête de liste — « Avec les Patriotes d'Israël »",
+      signatureRole: "Tête de liste — « Avec les Patriotes d'Israël » — Liste N°6",
     },
   },
   {
@@ -477,7 +477,7 @@ export const faqItems = [
 export const lexicon = [
   {
     term: "AFE",
-    definition: "Assemblée des Français de l'Étranger. Instance parisienne regroupant les 442 conseillers élus à travers le monde. Consultée sur les politiques publiques impactant les Français établis hors de France.",
+    definition: "Assemblée des Français de l'Étranger. Instance composée de 90 conseillers élus indirectement par les 442 conseillers consulaires répartis dans le monde. Rôle consultatif sur les politiques publiques concernant les Français établis hors de France.",
   },
   {
     term: "AEFE",
@@ -496,8 +496,12 @@ export const lexicon = [
     definition: "Liste Électorale Consulaire. Registre sur lequel doit être inscrit tout Français de l'étranger souhaitant voter aux élections consulaires, présidentielles, législatives (11e circonscription) ou européennes depuis son pays de résidence.",
   },
   {
-    term: "Olim / Olé hadach",
-    definition: "Hébreu : « nouveaux immigrants en Israël ». Olim au pluriel, olé hadach au masculin singulier, olah hadachah au féminin singulier. Terme désignant ceux qui ont fait leur Alya (montée en Israël).",
+    term: "Olim",
+    definition: "Hébreu : « immigrants montés en Israël » (pluriel). Désigne ceux qui ont effectué leur Alya. Au singulier : olé hadach (masculin) ou olah hadachah (féminin).",
+  },
+  {
+    term: "Olé hadach",
+    definition: "Nouvel immigrant en Israël dans le cadre de l'Alya. Ce statut confère divers droits pendant les premières années : aide à l'intégration, allégements fiscaux, cours d'hébreu gratuits en Oulpan, accompagnement administratif.",
   },
   {
     term: "PV",
@@ -510,6 +514,14 @@ export const lexicon = [
   {
     term: "USFE",
     definition: "Union des Français de l'Étranger. Association historique fondée en 1927 représentant les intérêts des Français établis hors de France auprès des pouvoirs publics.",
+  },
+  {
+    term: "Tsahal",
+    definition: "Forces de défense d'Israël (en hébreu : Tsva Hahaganah LeIsrael). Armée israélienne. De nombreux Franco-Israéliens y effectuent leur service ou s'y engagent comme combattants.",
+  },
+  {
+    term: "Toenet Rabbinique",
+    definition: "Avocate habilitée à plaider devant les tribunaux rabbiniques en Israël sur les affaires de statut personnel : mariage, divorce, conversion, succession dans le droit hébraïque. Équivalent féminin du Toen.",
   },
 ];
 
