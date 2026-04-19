@@ -68,7 +68,63 @@ Content centralisé : /src/config/content.js
 ## Sessions
 - Session 1 (TERMINÉE ✅) : refonte architecture + pages squelettes
 - Session 2 (TERMINÉE ✅) : contenus détaillés — 17 bios colistiers, engagement complet Ayache (structure 7 champs `ayacheEngagement`), FAQ complète (10 Q&R), lexique (9 termes), composant ShareWhatsApp sur /comment-voter + modal candidat + page candidat, fix ratio photo modal (aspect-square + max-h-[50vh])
-- Session 3 (À VENIR) : intégration PayPal + polish final
+- Session 3 (TERMINÉE ✅) : intégration PayPal + SEO + polish final (voir checklist ci-dessous)
+
+## Session 3/3 — Checklist (TERMINÉE)
+### PayPal Live (paiement sécurisé)
+- Backend `/api/paypal/create-order` avec validation stricte serveur (min/max par devise, preset=18/50/100/200 EUR uniquement, 3 mentions CNCCFP obligatoires)
+- Backend `/api/paypal/capture-order` avec mise à jour MongoDB
+- Backend `/api/paypal/webhook` avec validation signature PayPal `verify-webhook-signature` + fallback gracieux si `PAYPAL_WEBHOOK_ID` vide (log warning, pas de crash)
+- Rate limiter slowapi : 5 req / IP / heure sur create-order
+- Kill-switch `DONATIONS_ENABLED` (env backend) — bloque API 503 + masque formulaire frontend
+- Guard mandataire : si `MANDATAIRE_NOM` / `MANDATAIRE_ADRESSE` vides, API retourne 503 + bandeau rouge visible sur /soutenir
+- Logs applicatifs : tentative CREATE/CAPTURE loguée avec IP, email, montant, statut (pas dans MongoDB, logger dédié)
+- Stockage dons en collection `donations` avec schéma CNCCFP complet (paypal_order_id, paypal_capture_id, donor{...}, acceptPhysicalPerson/PersonalFunds/DataCollection, ip_address, user_agent, created_at/completed_at)
+
+### /soutenir refonte complète
+- Toggle devise EUR / USD / ILS (présets visibles uniquement en EUR)
+- Présets : 18 € (Chai חי), 50 € (20 flyers), 100 € (1h permanence), 200 € (200 SMS du 21 mai)
+- Champ montant libre (min 1 / max 4600 EUR-USD, max 20000 ILS)
+- Formulaire identité CNCCFP : prénom, nom, email, téléphone (opt), adresse, ville, code postal, pays
+- 3 cases légales obligatoires :
+  1. Personne physique majeure de nationalité française
+  2. Fonds personnels + plafond 4600€/campagne
+  3. Autorisation collecte CNCCFP
+- Boutons PayPal Smart Buttons (@paypal/react-paypal-js) désactivés (opacity-40 + pointer-events-none + aria-disabled) tant que le formulaire n'est pas complet et validé
+- Bandeau mandataire :
+  - Si configuré : bloc gris en bas de page avec mention L52-4
+  - Si vide : bandeau rouge visible en haut du formulaire avec message d'alerte
+- Sidebar sticky : pourquoi nous soutenir, explication Chai 18, sécurité/conformité
+
+### /soutenir/merci (page de remerciement)
+- Confirmation don (montant, devise, captureID)
+- Bouton ShareWhatsApp (message pré-rempli)
+- Bouton retour accueil
+- SEO dédié
+
+### Admin Dons (refactor schéma)
+- Lecture nouveau schéma (created_at, donor.firstName, impact_preset, paypal_order_id)
+- 4 cartes stats : Total / Complétés / En attente / Échoués
+- Bloc montants par devise (complétés uniquement)
+- Tableau : Date / Donateur / Contact / Montant / Preset / Statut / PayPal
+- Export CSV CNCCFP (`/api/admin/donations/export.csv`, auth requis, 19 colonnes)
+
+### SEO + Analytics + UX
+- `react-helmet-async` : `<HelmetProvider>` dans App.js + composant `<SEO>` réutilisable
+- Titre + description + OG unique sur chaque page (8 pages publiques + /soutenir + /soutenir/merci + /equipe/:slug dynamique)
+- Plausible Analytics : `<script defer data-domain="patriotes-israel.com" src="https://plausible.io/js/script.js">` dans `index.html`
+- `<ScrollToTop />` dans App.js → reset scroll sur changement de route
+- `sitemap.xml` + `robots.txt` dans `public/`
+- Favicon + Apple touch icon conservés
+
+### Points juridiques en attente de validation client
+- **⚠️ MANDATAIRE FINANCIER** : `MANDATAIRE_NOM` et `MANDATAIRE_ADRESSE` doivent être renseignés dans `backend/.env` (Railway) avant mise en ligne publique. Le site affiche un bandeau rouge tant que ces valeurs sont vides et l'API `/api/paypal/create-order` retourne 503.
+- **IMPORTANT** : L'Amouta israélienne n°580837276 ne peut PAS servir de mandataire au sens du Code électoral français. Le client doit désigner un mandataire financier (personne physique ou association de financement électoral) inscrit en France ou dans un État membre de l'UE.
+- `PAYPAL_CLIENT_SECRET` à renseigner dans Railway par le client (jamais dans le code)
+- `PAYPAL_WEBHOOK_ID` à configurer après création du webhook dans le PayPal Developer Dashboard (URL webhook : `https://patriotes-israel.com/api/paypal/webhook`)
+
+### Tests Session 3
+- iteration_6.json : 14/14 backend + 12/12 frontend PASS
 
 ## Composants réutilisables
 
