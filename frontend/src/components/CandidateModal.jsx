@@ -7,9 +7,14 @@ import {
   DialogDescription,
 } from './ui/dialog';
 import { Button } from './ui/button';
+import { ShareWhatsApp } from './ShareWhatsApp';
 
 export const CandidateModal = ({ candidate, isOpen, onClose }) => {
   if (!candidate) return null;
+
+  const candidateUrl = typeof window !== "undefined"
+    ? `${window.location.origin}/equipe/${candidate.slug}`
+    : `https://patriotes-israel.com/equipe/${candidate.slug}`;
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -17,8 +22,8 @@ export const CandidateModal = ({ candidate, isOpen, onClose }) => {
         className="p-0 max-w-2xl max-h-[90vh] flex flex-col gap-0 rounded-none sm:rounded-none overflow-hidden"
         data-testid="candidate-modal"
       >
-        {/* Photo */}
-        <div className="relative aspect-square md:aspect-[16/9] bg-slate-100 overflow-hidden flex-shrink-0">
+        {/* Photo — aspect-square 1:1 sur tous les breakpoints, plafond 50vh */}
+        <div className="relative aspect-square bg-slate-100 overflow-hidden flex-shrink-0 max-h-[50vh]">
           {candidate.photo && !candidate.useSilhouette ? (
             <img
               src={candidate.photo}
@@ -58,17 +63,24 @@ export const CandidateModal = ({ candidate, isOpen, onClose }) => {
             <p className="text-fr-blue font-medium mb-4 mt-2">{candidate.accroche}</p>
           )}
 
-          <p className="text-slate-600 leading-relaxed">
+          <p className="text-slate-600 leading-relaxed whitespace-pre-line">
             {candidate.bioFull || 'Biographie à venir'}
           </p>
         </div>
 
-        {/* Footer */}
-        <div className="p-4 border-t border-slate-200 bg-slate-50 flex-shrink-0">
+        {/* Footer : WhatsApp (gauche) + Fermer (droite) */}
+        <div className="p-4 border-t border-slate-200 bg-slate-50 flex-shrink-0 flex flex-col sm:flex-row gap-2">
+          <ShareWhatsApp
+            message={`👤 Je vous présente ${candidate.nom}, N°${String(candidate.numero).padStart(2, '0')} sur la liste « Avec les Patriotes d'Israël » (Liste N°6) pour les élections consulaires 2026.\n\n${candidate.accroche && candidate.accroche !== 'PLACEHOLDER' ? candidate.accroche + '\n\n' : ''}Découvrez son parcours complet :\n${candidateUrl}\n\nVote en ligne 21-27 mai · Urne 31 mai. Faites passer ! 🗳️`}
+            buttonText="Partager"
+            size="default"
+            className="flex-1"
+            testId={`modal-whatsapp-${candidate.slug}`}
+          />
           <Button
             onClick={onClose}
             variant="outline"
-            className="w-full"
+            className="flex-1"
             data-testid="modal-close-btn"
           >
             Fermer

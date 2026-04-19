@@ -66,9 +66,21 @@ Content centralisé : /src/config/content.js
 - Autres pages : institutionnel, structuré
 
 ## Sessions
-- Session 1 (TERMINÉE) : refonte architecture + pages squelettes
-- Session 2 (À VENIR) : contenus détaillés — bios complètes 18 candidats, FAQ complète, textes longs, modals enrichies
+- Session 1 (TERMINÉE ✅) : refonte architecture + pages squelettes
+- Session 2 (TERMINÉE ✅) : contenus détaillés — 17 bios colistiers, engagement complet Ayache (structure 7 champs `ayacheEngagement`), FAQ complète (10 Q&R), lexique (9 termes), composant ShareWhatsApp sur /comment-voter + modal candidat + page candidat, fix ratio photo modal (aspect-square + max-h-[50vh])
 - Session 3 (À VENIR) : intégration PayPal + polish final
+
+## Composants réutilisables
+
+### ShareWhatsApp (`/src/components/ShareWhatsApp.jsx`)
+Bouton de partage WhatsApp universel. 3 variants (primary #25D366, outline, ghost), 3 tailles (sm, default, lg). Utilisé sur `/comment-voter` (mobilisation virale guide de vote), dans `CandidateModal` (partage fiche candidat) et sur `CandidatePage` (partage page candidat individuelle). Messages hardcodés dans chaque appel (pas de centralisation dans content.js).
+
+## Photos candidates
+Les fichiers `.webp` des candidats ne sont pas encore uploadés. Le fallback User icon de Lucide s'affiche en attendant. Quand les photos seront prêtes (format 800×800 WebP standardisé), elles seront simplement déposées dans `/frontend/public/images/candidates/` — aucune modification de code nécessaire. Conventions :
+- `01-ayache.webp` (1200×1500, 4:5, seule exception)
+- `02-dahan.webp` à `17-kleczewski.webp` (800×800, 1:1)
+- `04-bisraor.svg` (silhouette, déjà en place)
+- `18-laloum.webp` (si disponible un jour)
 
 ## Credentials admin
 - URL : /admin

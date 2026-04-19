@@ -87,7 +87,7 @@ const EngagementsFAQ = () => {
               Questions Fréquentes
             </h2>
             <p className="text-slate-600">
-              La FAQ complète sera disponible prochainement
+              Les questions les plus fréquentes sur le vote, l'inscription et notre engagement.
             </p>
           </motion.div>
 

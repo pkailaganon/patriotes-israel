@@ -4,6 +4,7 @@ import { ArrowLeft, User } from 'lucide-react';
 import { Layout } from '../components/Layout';
 import { candidatesList } from '../config/content';
 import { Button } from '../components/ui/button';
+import { ShareWhatsApp } from '../components/ShareWhatsApp';
 
 const CandidatePage = () => {
   const { slug } = useParams();
@@ -26,6 +27,10 @@ const CandidatePage = () => {
       </Layout>
     );
   }
+
+  const pageUrl = typeof window !== "undefined"
+    ? window.location.href
+    : `https://patriotes-israel.com/equipe/${candidate.slug}`;
 
   return (
     <Layout>
@@ -84,7 +89,7 @@ const CandidatePage = () => {
         </div>
       </section>
 
-      {/* Bio */}
+      {/* Bio / Engagement */}
       <section className="section-spacing bg-white" data-testid="candidate-bio">
         <div className="container-campaign">
           <div className="max-w-3xl mx-auto">
@@ -92,16 +97,82 @@ const CandidatePage = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-slate-50 border border-slate-200 p-8 md:p-12"
             >
-              <p className="text-slate-600 leading-relaxed text-lg">
-                {candidate.bioFull && !candidate.bioFull.startsWith('PLACEHOLDER')
-                  ? candidate.bioFull
-                  : 'Biographie complète à paraître. Revenez bientôt.'}
-              </p>
+              {candidate.ayacheEngagement ? (
+                /* ── Tête de liste : 4 blocs structurés ── */
+                <div className="space-y-8">
+
+                  {/* Bloc 1 — Salutation + paragraphes intro */}
+                  <div className="bg-slate-50 border border-slate-200 p-8 md:p-12">
+                    <p className="font-serif text-xl md:text-2xl text-fr-blue italic mb-6">
+                      {candidate.ayacheEngagement.greeting}
+                    </p>
+                    <div className="space-y-5">
+                      {candidate.ayacheEngagement.paragraphs.map((p, i) => (
+                        <p key={i} className="text-slate-700 leading-relaxed text-lg">{p}</p>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Bloc 2 — Engagements numérotés */}
+                  <div className="bg-fr-blue/5 border-l-4 border-fr-blue p-8 md:p-10">
+                    <p className="font-serif text-lg md:text-xl font-bold text-slate-900 italic mb-8">
+                      {candidate.ayacheEngagement.commitmentsIntro}
+                    </p>
+                    <div className="space-y-6">
+                      {candidate.ayacheEngagement.commitments.map((commitment, i) => (
+                        <div key={i} className="flex items-start gap-4">
+                          <span className="font-accent text-4xl md:text-5xl font-bold text-fr-blue/25 flex-shrink-0 leading-none w-10">
+                            {String(i + 1).padStart(2, '0')}
+                          </span>
+                          <p className="text-slate-700 leading-relaxed pt-1">{commitment}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Bloc 3 — Paragraphes de clôture */}
+                  <div className="bg-slate-50 border border-slate-200 p-8 md:p-12 space-y-5">
+                    {candidate.ayacheEngagement.closingParagraphs.map((p, i) => (
+                      <p key={i} className="text-slate-700 leading-relaxed text-lg">{p}</p>
+                    ))}
+                  </div>
+
+                  {/* Bloc 4 — Signature */}
+                  <div className="border-t-2 border-fr-blue pt-6">
+                    <p className="font-serif text-xl font-bold text-slate-900 mb-1">
+                      {candidate.ayacheEngagement.signature}
+                    </p>
+                    <p className="text-fr-blue font-medium">
+                      {candidate.ayacheEngagement.signatureRole}
+                    </p>
+                  </div>
+
+                </div>
+              ) : candidate.bioFull && candidate.bioFull !== "Biographie à venir." ? (
+                /* ── Colistiers : bio standard avec sauts de paragraphes ── */
+                <div className="bg-slate-50 border border-slate-200 p-8 md:p-12">
+                  <div className="text-slate-600 leading-relaxed text-lg whitespace-pre-line">
+                    {candidate.bioFull}
+                  </div>
+                </div>
+              ) : (
+                /* ── Placeholder ── */
+                <div className="bg-slate-50 border border-slate-200 p-8 md:p-12">
+                  <p className="text-slate-500 italic text-center">
+                    Biographie complète à paraître. Revenez bientôt.
+                  </p>
+                </div>
+              )}
             </motion.div>
 
-            <div className="mt-8 text-center">
+            {/* Actions */}
+            <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <ShareWhatsApp
+                message={`👤 Je vous présente ${candidate.nom}, N°${String(candidate.numero).padStart(2, '0')} sur la liste « Avec les Patriotes d'Israël » (Liste N°6) pour les élections consulaires 2026.\n\n${candidate.accroche && candidate.accroche !== 'PLACEHOLDER' ? candidate.accroche + '\n\n' : ''}Découvrez son parcours complet :\n${pageUrl}\n\nVote en ligne 21-27 mai · Urne 31 mai. Faites passer ! 🗳️`}
+                buttonText="Partager sur WhatsApp"
+                testId={`candidate-page-whatsapp-${candidate.slug}`}
+              />
               <Link to="/equipe">
                 <Button variant="outline" data-testid="back-btn">
                   <ArrowLeft className="mr-2 w-4 h-4" />

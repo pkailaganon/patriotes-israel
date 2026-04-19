@@ -13,6 +13,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '../components/ui/accordion';
+import { ShareWhatsApp } from '../components/ShareWhatsApp';
 
 const CommentVoter = () => {
   return (
@@ -256,6 +257,32 @@ const CommentVoter = () => {
               ))}
             </Accordion>
           </div>
+        </div>
+      </section>
+
+      {/* WhatsApp Share */}
+      <section className="py-12 md:py-16 bg-[#25D366]/10 border-y border-[#25D366]/20" data-testid="whatsapp-share-section">
+        <div className="container-campaign">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-2xl mx-auto text-center"
+          >
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-slate-900 mb-3">
+              Aidez-nous à mobiliser la communauté
+            </h2>
+            <p className="text-slate-700 mb-6 leading-relaxed">
+              Partagez ce guide de vote avec votre famille, vos voisins, vos groupes WhatsApp.
+              Chaque Français informé est une voix qui compte.
+            </p>
+            <ShareWhatsApp
+              message={`🗳️ Liste N°6 — Avec les Patriotes d'Israël 🇫🇷🇮🇱\n\nConsulaires 2026 · 2e circonscription Israël (Tel-Aviv & Haïfa)\n\n📅 Vote en ligne : 21-27 mai\n📅 Vote à l'urne : 31 mai\n\nVoici le guide de vote complet, pour toi et tes proches :\nhttps://patriotes-israel.com/comment-voter\n\n#ElectionsConsulaires2026 #PatriotesDIsrael`}
+              buttonText="Partager ce guide sur WhatsApp"
+              size="lg"
+              testId="whatsapp-share-comment-voter"
+            />
+          </motion.div>
         </div>
       </section>
 
