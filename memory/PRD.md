@@ -1,87 +1,55 @@
-# PRD - Avec les Patriotes d'Israël
+## What's Been Implemented — Session 2/3 TERMINÉE (Avr 2026)
 
-## Problem Statement
-Site de campagne pour les élections consulaires françaises 2026 à Tel-Aviv et Haïfa. Liste "Avec les Patriotes d'Israël" menée par Michel (Michael) Ayach.
-
-## Architecture
-- **Frontend**: React + Tailwind CSS + Framer Motion
-- **Backend**: FastAPI + MongoDB
-- **Routing**: React Router v6
-- **Components**: Shadcn/UI + Custom components
-- **Content**: Centralized in `/src/config/content.js`
-- **Payment**: HYP integration ready in `/src/config/payment.js`
-- **Admin**: Backoffice sécurisé à `/admin`
-
-## User Personas
-1. **Français d'Israël (Tel-Aviv/Haïfa)**: Binationaux souhaitant des représentants engagés au CFE
-2. **Sympathisants**: Personnes souhaitant soutenir financièrement la campagne
-3. **Bénévoles potentiels**: Via le formulaire de contact
-4. **Administrateurs**: Gestion des contacts et dons via backoffice
-
-## Core Requirements (Static)
-- [x] 5 pages publiques: Accueil, Programme, Liste, Soutenir, Contact
-- [x] Page Mentions Légales
-- [x] Backoffice admin (/admin)
-- [x] Compte à rebours vers le 30 mai 2026
-- [x] Formulaire de dons avec toggle ILS/EUR
-- [x] Montants prédéfinis: 18₪ (Chai), 50₪, 100₪, 200₪
-- [x] Formulaire de contact avec validation + enregistrement DB
-- [x] Design institutionnel avec logo circulaire officiel
-- [x] Mobile-first, responsive
+### Enrichissement des contenus (branche feature/session-2-contenus)
+- `candidatesList` complète : 18 bios finales, zéro PLACEHOLDER, `useSilhouette` sur Katy Bisraor
+- Ayache : `ayacheEngagement` (7 champs : greeting, paragraphs[3], commitmentsIntro, commitments[4], closingParagraphs[3], signature, signatureRole)
+- `CandidatePage.jsx` : rendu conditionnel 4 blocs pour Ayache vs `whitespace-pre-line` pour colistiers vs placeholder
+- `faqItems` : 10 Q&R complètes (remplace 3 squelettes)
+- `lexicon` : 9 définitions (AFE, AEFE, ASFE, CFE, LEC, Olim, PV, STAFE, USFE)
+- Composant `ShareWhatsApp.jsx` : 3 variants (primary #25D366, outline, ghost), 3 tailles, messages hardcodés
+- `CommentVoter.jsx` : section WhatsApp verte (bg-[#25D366]/10) avant CTA
+- `CandidateModal.jsx` : footer 2 boutons (ShareWhatsApp + Fermer), photo aspect-square max-h+max-w [50vh]
+- `EngagementsFAQ.jsx` : sous-titre FAQ mis à jour
+- Testing iteration 4 : 100% (19/19 tests)
 
 ## What's Been Implemented — Session 1/3 TERMINÉE (Avr 2026)
 
-### Refonte architecturale complète (branche feature/refonte-architecture) — Session 1/3 VALIDÉE 100%
-- App.js mis à jour : 9 routes actives + Navigate redirects (/programme→/valeurs-programme, /liste→/equipe)
-- 6 nouvelles pages : PourquoiNous, ValeursProgramme, CommentVoter, Equipe, EngagementsFAQ, CandidatePage (/equipe/:slug)
-- CandidateModal.jsx : Shadcn Dialog (@radix-ui/react-dialog) — Escape, focus trap, scroll lock natifs, DialogDescription sr-only (ARIA)
-- Liste.jsx + Programme.jsx supprimés (code mort — référençaient exports supprimés de content.js)
-- CandidatePage photo : aspect-square (w-40 md:w-56 aspect-square) — ratio 1:1 mobile ET desktop
-- content.js restructuré : 17 sections dans l'ordre prescrit, toutes les données squelette
-- Dossiers images créés : /public/images/candidates/, campaign/, logos/ (+ .gitkeep)
-- SVG silhouette Katy Bisraor : /public/images/candidates/04-bisraor.svg
-- PROJECT_MEMORY.md créé à la racine (valeurs design client réelles : fr-blue #27428F, Oswald)
-- Testing 3 itérations : 100% chaque fois — routes, redirections, modal accessibilité, navigation desktop/mobile, admin
+### Refonte architecturale complète (branche feature/refonte-architecture)
+- App.js mis à jour : 9 routes + Navigate redirects
+- 6 nouvelles pages : PourquoiNous, ValeursProgramme, CommentVoter, Equipe, EngagementsFAQ, CandidatePage
+- CandidateModal.jsx : Shadcn Dialog (Escape, focus trap, scroll lock natifs)
+- Liste.jsx + Programme.jsx supprimés
+- PROJECT_MEMORY.md à la racine, dossiers images, SVG silhouette Bisraor
+- Testing iterations 1-3 : 100%
 
-## What's Been Implemented (Jan 2026)
-1. **Homepage**: Hero "RUPTURE AVEC LA SOUMISSION", countdown, valeurs
-2. **Programme**: 4 engagements avec design Bento grid
-3. **Liste**: Candidats Tel-Aviv & Haïfa, Michel Ayach en vedette
-4. **Soutenir**: Formulaire de dons complet avec toggle devise
-5. **Contact**: Formulaire avec validation, enregistrement en base
-6. **Mentions Légales**: Page complète avec placeholders
-7. **Backoffice Admin** (/admin):
-   - Connexion sécurisée (admin / patriotes2026)
-   - Onglet Contacts: liste, stats, marquer lu, supprimer
-   - Onglet Dons: liste avec coordonnées, stats, filtres
-8. **Backend APIs**:
-   - POST /api/contact - Enregistrer demande de contact
-   - POST /api/donations - Enregistrer un don
-   - GET /api/admin/contacts - Liste des contacts (auth)
-   - GET /api/admin/donations - Liste des dons (auth)
+## Original Problem Statement
+Site de campagne élections consulaires françaises 2026 — Deuxième circonscription d'Israël (Tel-Aviv / Haïfa). Candidate tête de liste : Professeur Michael Ayache. Liste N°6 "Avec les Patriotes d'Israël".
 
-## Prioritized Backlog
+## Architecture
+- Stack : React + Tailwind + Framer Motion + React Router v6 + Shadcn/UI / FastAPI + MongoDB / Railway
+- Content centralisé : /src/config/content.js
+- Routes : / | /pourquoi-nous | /valeurs-programme | /comment-voter | /equipe | /equipe/:slug | /engagements-faq | /soutenir | /contact | /mentions-legales | /admin
+- Redirections : /programme→/valeurs-programme, /liste→/equipe
 
-### P0 (Bloquant pour lancement)
-- [DONE] Toutes les pages créées et fonctionnelles
-- [DONE] Backoffice admin opérationnel
+## Design System (valeurs client validées)
+- fr_blue : #27428F (HSL 224 42% 36%)
+- republic_red : #E1000F
+- Police principale : Oswald (font-accent + font-serif roles)
+- Police corps : Plus Jakarta Sans
+- Radius : rounded-sm (0.125rem)
+- Animations : Framer Motion — fadeInUp + stagger + whileInView
 
-### P1 (Avant campagne active)
-- [ ] Intégration HYP réelle (identifiants à fournir)
-- [ ] Ajout des vrais noms/photos des candidats
-- [ ] Compléter les placeholders Mentions Légales
+## Sessions
+- Session 1 (TERMINÉE ✅) : architecture + squelettes
+- Session 2 (TERMINÉE ✅) : contenus + ShareWhatsApp
+- Session 3 (À VENIR) : PayPal + polish
 
-### P2 (Améliorations)
-- [ ] Export CSV des contacts/dons
-- [ ] Analytics (Google Analytics / Plausible)
-- [ ] Newsletter signup
+## Backlog P0/P1/P2
+- P0 : Upload photos candidats .webp (client à fournir)
+- P1 : Session 3 — Intégration PayPal sur /soutenir
+- P2 : Biographie Rosine Laloum (N°18) — client à fournir
+- P2 : Polish animations, accessibilité WCAG audit complet
 
-## Credentials Admin
-- **URL**: /admin
-- **Username**: admin
-- **Password**: patriotes2026
-
-## Next Tasks
-1. Obtenir identifiants HYP Payment et les configurer
-2. Remplacer candidats placeholder par les vrais candidats
-3. Compléter les placeholders dans Mentions Légales
+## Credentials
+- Admin : /admin — admin / patriotes2026
+- PayPal : à configurer en Session 3 dans Railway .env

@@ -23,7 +23,7 @@ export const CandidateModal = ({ candidate, isOpen, onClose }) => {
         data-testid="candidate-modal"
       >
         {/* Photo — aspect-square 1:1 sur tous les breakpoints, plafond 50vh */}
-        <div className="relative aspect-square bg-slate-100 overflow-hidden flex-shrink-0 max-h-[50vh]">
+        <div className="relative aspect-square bg-slate-100 overflow-hidden flex-shrink-0 max-h-[50vh] max-w-[50vh] mx-auto w-full">
           {candidate.photo && !candidate.useSilhouette ? (
             <img
               src={candidate.photo}
