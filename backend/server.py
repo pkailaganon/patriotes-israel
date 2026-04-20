@@ -52,7 +52,7 @@ LIMITS = {
     "ILS": {"min": 1, "max": 20000},
 }
 
-ALLOWED_PRESETS = [18, 50, 100, 200]  # Chai, flyers, perm, SMS
+ALLOWED_PRESETS = [26, 52, 104, 260]
 
 # ============== Logging ==============
 
@@ -210,16 +210,11 @@ def validate_donation_amount(amount: float, currency: str, preset: Optional[int]
     limits = LIMITS.get(currency)
     if not limits:
         raise HTTPException(status_code=400, detail="Devise non supportée.")
-    # Preset consistency (if preset given, amount must match and currency must be EUR)
+    # Preset consistency (if preset given, amount must match) — presets
+    # are now available in all currencies (EUR/USD/ILS).
     if preset is not None:
         if preset not in ALLOWED_PRESETS:
             raise HTTPException(status_code=400, detail="Preset invalide.")
-        # Presets are expressed in EUR — if currency is different, reject
-        if currency != "EUR":
-            raise HTTPException(
-                status_code=400,
-                detail="Les montants symboliques (18/50/100/200) sont en EUR uniquement."
-            )
         if int(amount) != preset:
             raise HTTPException(status_code=400, detail="Montant preset incohérent.")
     # Numeric bounds

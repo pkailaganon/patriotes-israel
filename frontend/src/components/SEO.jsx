@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 const DEFAULT_TITLE = "Avec les Patriotes d'Israël — Liste N°6 — Élections Consulaires 2026";
 const DEFAULT_DESC = "Liste N°6 pour les élections consulaires françaises 2026 — 2e circonscription Tel-Aviv / Haïfa. Avec les Patriotes d'Israël — le renouveau pour vous défendre.";
-const DEFAULT_IMAGE = "https://patriotes-israel.com/images/og-default.jpg";
+const DEFAULT_IMAGE = "https://patriotes-israel.com/images/og-default.webp";
 
 export const SEO = ({
   title = DEFAULT_TITLE,

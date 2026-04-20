@@ -17,17 +17,12 @@ const PAYPAL_CLIENT_ID = process.env.REACT_APP_PAYPAL_CLIENT_ID || '';
 const FRONTEND_DONATIONS_ENABLED =
   (process.env.REACT_APP_DONATIONS_ENABLED || 'true').toLowerCase() === 'true';
 
-const PRESETS = [
-  { value: 18, label: '18 €', subtitle: 'Chai (חי) — symbole de la Vie' },
-  { value: 50, label: '50 €', subtitle: '20 flyers dans votre ville' },
-  { value: 100, label: '100 €', subtitle: '1h de permanence téléphonique' },
-  { value: 200, label: '200 €', subtitle: '200 SMS de mobilisation le 21 mai' },
-];
+const PRESETS = [26, 52, 104, 260];
 
 const CURRENCIES = [
+  { code: 'ILS', symbol: '₪', min: 1, max: 20000 },
   { code: 'EUR', symbol: '€', min: 1, max: 4600 },
   { code: 'USD', symbol: '$', min: 1, max: 4600 },
-  { code: 'ILS', symbol: '₪', min: 1, max: 20000 },
 ];
 
 const CURRENCY_MAP = Object.fromEntries(CURRENCIES.map(c => [c.code, c]));
@@ -105,37 +100,33 @@ const CurrencyToggle = ({ value, onChange }) => (
 );
 
 const PresetGrid = ({ selectedPreset, customAmount, onSelectPreset, onCustomChange, currency }) => {
-  const showPresets = currency === 'EUR';
   const cur = CURRENCY_MAP[currency];
 
   return (
     <div className="space-y-3">
-      {showPresets && (
-        <div className="grid grid-cols-2 gap-3" data-testid="preset-grid">
-          {PRESETS.map(p => (
-            <button
-              key={p.value}
-              type="button"
-              onClick={() => onSelectPreset(p.value)}
-              className={`p-4 text-left border-2 rounded-sm transition-all ${
-                selectedPreset === p.value
-                  ? 'bg-fr-blue border-fr-blue text-white'
-                  : 'bg-white border-slate-200 hover:border-fr-blue'
-              }`}
-              data-testid={`preset-${p.value}-btn`}
-            >
-              <div className="font-serif font-bold text-2xl mb-1">{p.label}</div>
-              <div className={`text-xs leading-snug ${selectedPreset === p.value ? 'text-white/80' : 'text-slate-500'}`}>
-                {p.subtitle}
-              </div>
-            </button>
-          ))}
-        </div>
-      )}
+      <div className="grid grid-cols-2 gap-3" data-testid="preset-grid">
+        {PRESETS.map(p => (
+          <button
+            key={p}
+            type="button"
+            onClick={() => onSelectPreset(p)}
+            className={`p-4 text-center border-2 rounded-sm transition-all ${
+              selectedPreset === p
+                ? 'bg-fr-blue border-fr-blue text-white'
+                : 'bg-white border-slate-200 hover:border-fr-blue'
+            }`}
+            data-testid={`preset-${p}-btn`}
+          >
+            <div className="font-serif font-bold text-2xl">
+              {cur.symbol} {p}
+            </div>
+          </button>
+        ))}
+      </div>
 
       <div>
         <Label htmlFor="custom-amount" className="text-xs uppercase tracking-wider font-bold text-slate-700">
-          {showPresets ? 'Ou montant libre' : 'Montant libre'}
+          Ou montant libre
         </Label>
         <div className="relative mt-2">
           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold">
@@ -168,7 +159,7 @@ const IdentityForm = ({ donor, setDonor }) => {
   const field = (name, label, opts = {}) => (
     <div>
       <Label htmlFor={name} className="text-xs uppercase tracking-wider font-bold text-slate-700">
-        {label} {opts.required !== false && <span className="text-republic-red">*</span>}
+        {label} <span className="text-republic-red">*</span>
       </Label>
       <Input
         id={name}
@@ -188,7 +179,6 @@ const IdentityForm = ({ donor, setDonor }) => {
         {field('lastName', 'Nom', { autoComplete: 'family-name' })}
       </div>
       {field('email', 'Email', { type: 'email', autoComplete: 'email' })}
-      {field('phone', 'Téléphone', { type: 'tel', autoComplete: 'tel', required: false })}
       {field('address', 'Adresse', { autoComplete: 'street-address' })}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {field('postalCode', 'Code postal', { autoComplete: 'postal-code' })}
@@ -200,38 +190,35 @@ const IdentityForm = ({ donor, setDonor }) => {
 };
 
 const LegalCheckboxes = ({ accepts, setAccepts }) => {
-  const toggle = (k) => (v) => setAccepts({ ...accepts, [k]: v === true });
-  const Item = ({ name, label, testid }) => (
-    <label htmlFor={name} className="flex items-start gap-3 cursor-pointer group">
-      <Checkbox
-        id={name}
-        checked={accepts[name]}
-        onCheckedChange={toggle(name)}
-        className="mt-1 flex-shrink-0"
-        data-testid={testid}
-      />
-      <span className="text-sm text-slate-700 leading-relaxed group-hover:text-slate-900">
-        {label}
-      </span>
-    </label>
-  );
+  // Single grouped consent — all 3 legal attestations bundled in one box.
+  // The 3 booleans are set together to preserve CNCCFP audit trail.
+  const checked = accepts.acceptPhysicalPerson && accepts.acceptPersonalFunds && accepts.acceptDataCollection;
+  const toggleAll = (v) => {
+    const on = v === true;
+    setAccepts({
+      acceptPhysicalPerson: on,
+      acceptPersonalFunds: on,
+      acceptDataCollection: on,
+    });
+  };
   return (
-    <div className="space-y-3 bg-slate-50 border border-slate-200 p-5 rounded-sm" data-testid="legal-checkboxes">
-      <Item
-        name="acceptPhysicalPerson"
-        testid="accept-physical-person"
-        label="Je certifie être une personne physique majeure de nationalité française."
-      />
-      <Item
-        name="acceptPersonalFunds"
-        testid="accept-personal-funds"
-        label="Je certifie que ce don provient de mes fonds personnels et n'excède pas, avec les dons déjà effectués cette année, le plafond légal de 4 600 € par campagne."
-      />
-      <Item
-        name="acceptDataCollection"
-        testid="accept-data-collection"
-        label="J'autorise la collecte de mes coordonnées conformément aux obligations légales de la Commission nationale des comptes de campagne (CNCCFP)."
-      />
+    <div className="bg-slate-50 border border-slate-200 p-5 rounded-sm" data-testid="legal-checkboxes">
+      <label htmlFor="accept-all" className="flex items-start gap-3 cursor-pointer group">
+        <Checkbox
+          id="accept-all"
+          checked={checked}
+          onCheckedChange={toggleAll}
+          className="mt-1 flex-shrink-0"
+          data-testid="accept-all"
+        />
+        <span className="text-sm text-slate-700 leading-relaxed group-hover:text-slate-900">
+          Je certifie être une personne physique majeure de nationalité française,
+          que ce don provient de mes fonds personnels et n'excède pas, avec les dons
+          déjà effectués cette année, le plafond légal de 4&nbsp;600&nbsp;€ par campagne.
+          J'autorise la collecte de mes coordonnées conformément aux obligations
+          légales de la Commission nationale des comptes de campagne (CNCCFP).
+        </span>
+      </label>
     </div>
   );
 };
@@ -246,13 +233,13 @@ const Soutenir = () => {
   const [configLoading, setConfigLoading] = useState(true);
 
   // Form state
-  const [currency, setCurrency] = useState('EUR');
-  const [selectedPreset, setSelectedPreset] = useState(50);
+  const [currency, setCurrency] = useState('ILS');
+  const [selectedPreset, setSelectedPreset] = useState(52);
   const [customAmount, setCustomAmount] = useState('');
 
   const [donor, setDonor] = useState({
-    firstName: '', lastName: '', email: '', phone: '',
-    address: '', city: '', postalCode: '', country: 'France',
+    firstName: '', lastName: '', email: '',
+    address: '', city: '', postalCode: '', country: 'Israël',
   });
   const [accepts, setAccepts] = useState({
     acceptPhysicalPerson: false,
@@ -271,17 +258,12 @@ const Soutenir = () => {
       .finally(() => setConfigLoading(false));
   }, []);
 
-  // Reset preset if currency switches away from EUR
-  useEffect(() => {
-    if (currency !== 'EUR') setSelectedPreset(null);
-  }, [currency]);
-
   // Effective amount (preset wins, otherwise customAmount)
   const amount = useMemo(() => {
-    if (selectedPreset && currency === 'EUR') return selectedPreset;
+    if (selectedPreset) return selectedPreset;
     const parsed = parseFloat(customAmount);
     return isNaN(parsed) ? 0 : parsed;
-  }, [selectedPreset, customAmount, currency]);
+  }, [selectedPreset, customAmount]);
 
   const cur = CURRENCY_MAP[currency];
   const amountValid = amount >= cur.min && amount <= cur.max;
@@ -298,7 +280,7 @@ const Soutenir = () => {
   const mandataireAdresse = config?.mandataire_adresse || '';
   const mandataireReady = mandataireNom && mandataireAdresse;
 
-  const impactPresetForApi = (selectedPreset && currency === 'EUR') ? selectedPreset : null;
+  const impactPresetForApi = selectedPreset || null;
 
   // PayPal handlers
   const createOrder = async () => {
@@ -467,7 +449,7 @@ const Soutenir = () => {
                       3. Mentions légales
                     </h2>
                     <p className="text-sm text-slate-500 mb-5">
-                      Les 3 cases doivent être cochées pour activer le paiement.
+                      Cochez cette case pour activer le paiement.
                     </p>
                     <LegalCheckboxes accepts={accepts} setAccepts={setAccepts} />
                   </div>
@@ -482,7 +464,7 @@ const Soutenir = () => {
                     <div className="flex items-start gap-2 text-sm text-amber-800 bg-amber-50 border border-amber-200 p-3 rounded-sm mb-4" data-testid="paypal-blocked-hint">
                       <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
                       <span>
-                        Complétez le montant, vos coordonnées et les 3 cases légales pour activer le bouton PayPal.
+                        Complétez le montant, vos coordonnées et la case légale pour activer le bouton PayPal.
                       </span>
                     </div>
                   )}
@@ -558,16 +540,6 @@ const Soutenir = () => {
                         </li>
                       ))}
                     </ul>
-                  </div>
-
-                  <div className="bg-campaign-gold/10 border border-campaign-gold/30 p-6" data-testid="chai-card">
-                    <h4 className="font-serif font-bold text-slate-900 mb-2">
-                      18 € = Chai (חי) = La Vie
-                    </h4>
-                    <p className="text-sm text-slate-600">
-                      Dans la tradition juive, le chiffre 18 symbolise la vie.
-                      Un don de 18 € est un geste symbolique fort de soutien à notre combat.
-                    </p>
                   </div>
 
                   <div className="bg-slate-900 text-white p-6" data-testid="security-card">
