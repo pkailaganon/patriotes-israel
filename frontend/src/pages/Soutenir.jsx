@@ -476,6 +476,7 @@ const Soutenir = () => {
                   ) : (
                     <div className={!canPay ? 'opacity-40 pointer-events-none' : ''} aria-disabled={!canPay}>
                       <PayPalScriptProvider
+                        key={currency}
                         options={{
                           clientId: PAYPAL_CLIENT_ID,
                           currency,
