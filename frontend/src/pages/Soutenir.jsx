@@ -232,6 +232,22 @@ const Soutenir = () => {
   const [config, setConfig] = useState(null);
   const [configLoading, setConfigLoading] = useState(true);
 
+  // Detect default country from browser locale (fallback: Israël)
+  const detectCountry = () => {
+    try {
+      const lang = (navigator.language || 'fr-IL').toLowerCase();
+      const region = lang.split('-')[1];
+      const map = {
+        il: 'Israël', fr: 'France', be: 'Belgique', ch: 'Suisse',
+        ca: 'Canada', lu: 'Luxembourg', gb: 'Royaume-Uni', us: 'États-Unis',
+        de: 'Allemagne', es: 'Espagne', it: 'Italie', pt: 'Portugal',
+      };
+      return map[region] || 'Israël';
+    } catch {
+      return 'Israël';
+    }
+  };
+
   // Form state
   const [currency, setCurrency] = useState('ILS');
   const [selectedPreset, setSelectedPreset] = useState(52);
@@ -239,7 +255,7 @@ const Soutenir = () => {
 
   const [donor, setDonor] = useState({
     firstName: '', lastName: '', email: '',
-    address: '', city: '', postalCode: '', country: 'Israël',
+    address: '', city: '', postalCode: '', country: detectCountry(),
   });
   const [accepts, setAccepts] = useState({
     acceptPhysicalPerson: false,

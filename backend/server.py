@@ -54,6 +54,32 @@ LIMITS = {
 
 ALLOWED_PRESETS = [26, 52, 104, 260]
 
+# Map of common country names (FR + EN) to ISO 3166-1 alpha-2 codes.
+# Used to pre-fill the PayPal `payer.address.country_code` so donors aren't
+# asked to re-enter their billing address in the PayPal popup.
+COUNTRY_TO_ISO = {
+    "israel": "IL", "israël": "IL", "israel ": "IL",
+    "france": "FR", "belgique": "BE", "belgium": "BE",
+    "suisse": "CH", "switzerland": "CH",
+    "canada": "CA", "luxembourg": "LU",
+    "royaume-uni": "GB", "united kingdom": "GB", "uk": "GB",
+    "etats-unis": "US", "états-unis": "US", "usa": "US", "united states": "US",
+    "allemagne": "DE", "germany": "DE",
+    "espagne": "ES", "spain": "ES",
+    "italie": "IT", "italy": "IT",
+    "portugal": "PT", "maroc": "MA", "morocco": "MA",
+    "tunisie": "TN", "tunisia": "TN",
+}
+
+def country_to_iso(name: str) -> str:
+    """Normalize a free-text country name to ISO 3166-1 alpha-2. Default: IL."""
+    if not name:
+        return "IL"
+    key = name.strip().lower()
+    if len(key) == 2 and key.isalpha():
+        return key.upper()
+    return COUNTRY_TO_ISO.get(key, "IL")
+
 # ============== Logging ==============
 
 logging.basicConfig(
@@ -330,6 +356,21 @@ async def paypal_create_order(request: Request, payload: CreateOrderInput):
                 "value": amount_str,
             },
         }],
+        # Pre-fill payer info so PayPal doesn't ask again for billing address
+        # (especially important for guest card checkout / AVS).
+        "payer": {
+            "name": {
+                "given_name": payload.donor.firstName,
+                "surname": payload.donor.lastName,
+            },
+            "email_address": payload.donor.email,
+            "address": {
+                "address_line_1": payload.donor.address,
+                "admin_area_2": payload.donor.city,
+                "postal_code": payload.donor.postalCode,
+                "country_code": country_to_iso(payload.donor.country),
+            },
+        },
         "application_context": {
             "brand_name": "Patriotes d'Israël",
             "locale": "fr-FR",
