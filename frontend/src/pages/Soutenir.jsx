@@ -9,6 +9,7 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Checkbox } from '../components/ui/checkbox';
+import { assets } from '../config/content';
 import { toast } from 'sonner';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -377,25 +378,36 @@ const Soutenir = () => {
           <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-white blur-3xl" />
         </div>
         <div className="container-campaign relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <div className="flex items-center gap-2 mb-6">
-              <Heart className="w-6 h-6 text-republic-red" fill="currentColor" />
-              <span className="text-white/80 uppercase tracking-wider text-sm font-bold">
-                Soutenez la liste N°6
-              </span>
-            </div>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Chaque don compte pour défendre les Français d'Israël
-            </h1>
-            <p className="text-xl text-white/90 leading-relaxed">
-              Votre contribution finance la campagne terrain à Tel-Aviv et Haïfa.
-              Paiement 100% sécurisé via PayPal.
-            </p>
-          </motion.div>
+          <div className="grid lg:grid-cols-[1fr_auto] gap-8 md:gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="max-w-3xl"
+            >
+              <div className="flex items-center gap-2 mb-6">
+                <Heart className="w-6 h-6 text-republic-red" fill="currentColor" />
+                <span className="text-white/80 uppercase tracking-wider text-sm font-bold">
+                  Soutenez la liste N°6
+                </span>
+              </div>
+              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                Chaque don compte pour défendre les Français d'Israël
+              </h1>
+              <p className="text-xl text-white/90 leading-relaxed">
+                Votre contribution finance la campagne terrain à Tel-Aviv et Haïfa.
+                Paiement 100% sécurisé via PayPal.
+              </p>
+            </motion.div>
+            <motion.img
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              src={assets.logoCircle}
+              alt="Avec les Patriotes d'Israël"
+              className="hidden lg:block w-40 h-40 md:w-48 md:h-48 object-contain drop-shadow-2xl justify-self-end"
+              data-testid="soutenir-logo"
+            />
+          </div>
         </div>
       </section>
 

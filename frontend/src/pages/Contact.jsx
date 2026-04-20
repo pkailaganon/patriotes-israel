@@ -173,9 +173,10 @@ const Contact = () => {
               className="hidden lg:flex justify-center"
             >
               <img
-                src={assets.logoMain}
-                alt="Logo"
-                className="w-48 h-48 rounded-full shadow-xl"
+                src={assets.logoCircle}
+                alt="Avec les Patriotes d'Israël"
+                className="w-56 h-56 md:w-64 md:h-64 object-contain drop-shadow-xl"
+                data-testid="contact-logo"
               />
             </motion.div>
           </div>

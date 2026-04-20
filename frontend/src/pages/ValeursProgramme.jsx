@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { Layout } from '../components/Layout';
 import { SEO } from '../components/SEO';
-import { valuesDetailed, actionSheets } from '../config/content';
+import { valuesDetailed, actionSheets, assets } from '../config/content';
 import { Button } from '../components/ui/button';
 
 const fadeInUp = {
@@ -21,21 +21,31 @@ const ValeursProgramme = () => {
       {/* Hero */}
       <section className="py-16 md:py-24 bg-slate-50 border-b border-slate-200" data-testid="valeurs-hero">
         <div className="container-campaign">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <span className="inline-block bg-fr-blue/10 text-fr-blue px-4 py-2 text-xs uppercase tracking-widest font-bold mb-6">
-              Nos valeurs & Programme
-            </span>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4">
-              Juifs, Sionistes, Patriotes
-            </h1>
-            <p className="text-xl md:text-2xl text-fr-blue font-medium">
-              5 valeurs, 5 fiches action
-            </p>
-          </motion.div>
+          <div className="grid lg:grid-cols-[1fr_auto] gap-8 md:gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="max-w-3xl"
+            >
+              <span className="inline-block bg-fr-blue/10 text-fr-blue px-4 py-2 text-xs uppercase tracking-widest font-bold mb-6">
+                Nos valeurs & Programme
+              </span>
+              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4">
+                Juifs, Sionistes, Patriotes
+              </h1>
+              <p className="text-xl md:text-2xl text-fr-blue font-medium">
+                5 valeurs, 5 fiches action
+              </p>
+            </motion.div>
+            <motion.img
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              src={assets.logoCircle}
+              alt="Avec les Patriotes d'Israël"
+              className="hidden lg:block w-40 h-40 md:w-48 md:h-48 object-contain drop-shadow-xl justify-self-end"
+              data-testid="programme-logo"
+            />
+          </div>
         </div>
       </section>
 

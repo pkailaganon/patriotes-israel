@@ -53,9 +53,10 @@ const Equipe = () => {
             <motion.img
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              src={assets.logoMain}
-              alt="Logo"
-              className="w-24 h-24 md:w-32 md:h-32 object-contain"
+              src={assets.logoCircle}
+              alt="Avec les Patriotes d'Israël"
+              className="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-xl"
+              data-testid="equipe-logo"
             />
           </div>
         </div>

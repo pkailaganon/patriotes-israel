@@ -2,7 +2,31 @@ import { motion } from 'framer-motion';
 import { Layout } from '../components/Layout';
 import { SEO } from '../components/SEO';
 
+/**
+ * ObfuscatedEmail — displays an email address in a way that:
+ *  - Is visually readable by humans (left-to-right)
+ *  - Is NOT clickable (no mailto link)
+ *  - Is harder to harvest by naive scrapers (text is stored reversed in the
+ *    HTML source, and CSS bidi-override flips it back for display).
+ */
+const ObfuscatedEmail = ({ email, testId }) => {
+  const reversed = email.split('').reverse().join('');
+  return (
+    <span
+      className="inline-block select-all"
+      style={{ unicodeBidi: 'bidi-override', direction: 'rtl' }}
+      data-testid={testId}
+      aria-label={`Adresse email : ${email} (non cliquable)`}
+    >
+      {reversed}
+    </span>
+  );
+};
+
 const MentionsLegales = () => {
+  const contactEmail = 'contact@patriotes-israel.com';
+  const creatorEmail = 'guenounmichael@gmail.com';
+
   return (
     <Layout>
       <SEO
@@ -37,13 +61,11 @@ const MentionsLegales = () => {
                     <strong>Circonscription :</strong> Tel-Aviv & Haïfa
                   </p>
                   <p className="text-slate-600 mb-2">
-                    <strong>Adresse :</strong> [À COMPLÉTER]
-                  </p>
-                  <p className="text-slate-600 mb-2">
-                    <strong>Email :</strong> [À COMPLÉTER]
+                    <strong>Adresse :</strong> Hamacabim 100, Shoham, Israël
                   </p>
                   <p className="text-slate-600">
-                    <strong>Téléphone :</strong> [À COMPLÉTER]
+                    <strong>Email :</strong>{' '}
+                    <ObfuscatedEmail email={contactEmail} testId="legal-email-editor" />
                   </p>
                 </div>
               </section>
@@ -65,13 +87,48 @@ const MentionsLegales = () => {
                 </h2>
                 <div className="bg-white p-6 border border-slate-200">
                   <p className="text-slate-600 mb-2">
-                    <strong>Hébergeur :</strong> [À COMPLÉTER]
+                    <strong>Hébergeur :</strong> Railway Corp.
                   </p>
                   <p className="text-slate-600 mb-2">
-                    <strong>Adresse :</strong> [À COMPLÉTER]
+                    <strong>Adresse :</strong> 2261 Market Street #4059, San Francisco, CA 94114, États-Unis
                   </p>
                   <p className="text-slate-600">
-                    <strong>Site web :</strong> [À COMPLÉTER]
+                    <strong>Site web :</strong>{' '}
+                    <a
+                      href="https://railway.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-fr-blue hover:underline"
+                    >
+                      railway.com
+                    </a>
+                  </p>
+                </div>
+              </section>
+
+              {/* Création */}
+              <section>
+                <h2 className="font-serif text-xl font-bold text-slate-900 mb-4">
+                  Création du site
+                </h2>
+                <div className="bg-white p-6 border border-slate-200">
+                  <p className="text-slate-600 mb-2">
+                    <strong>Conception &amp; développement :</strong> WorkitDoit
+                  </p>
+                  <p className="text-slate-600 mb-2">
+                    <strong>Site web :</strong>{' '}
+                    <a
+                      href="https://workitdoit.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-fr-blue hover:underline"
+                    >
+                      workitdoit.com
+                    </a>
+                  </p>
+                  <p className="text-slate-600">
+                    <strong>Contact :</strong>{' '}
+                    <ObfuscatedEmail email={creatorEmail} testId="legal-email-creator" />
                   </p>
                 </div>
               </section>
@@ -90,9 +147,6 @@ const MentionsLegales = () => {
                   <li>Tout don supérieur à 150 € doit être effectué par chèque, virement ou carte bancaire.</li>
                   <li>Un reçu fiscal sera délivré pour chaque don, permettant une réduction d'impôt de 66% du montant du don dans la limite de 20% du revenu imposable.</li>
                 </ul>
-                <p className="text-slate-600 mt-4">
-                  <strong>Mandataire financier :</strong> [À COMPLÉTER]
-                </p>
               </section>
 
               {/* Propriété intellectuelle */}
@@ -120,7 +174,8 @@ const MentionsLegales = () => {
                   Les données collectées via les formulaires de ce site (contact, dons) sont utilisées exclusivement dans le cadre de la campagne électorale et ne seront pas cédées à des tiers.
                 </p>
                 <p className="text-slate-600">
-                  Pour exercer vos droits ou pour toute question relative à vos données personnelles, contactez-nous à : <strong>[EMAIL À COMPLÉTER]</strong>
+                  Pour exercer vos droits ou pour toute question relative à vos données personnelles, contactez-nous à :{' '}
+                  <ObfuscatedEmail email={contactEmail} testId="legal-email-rgpd" />
                 </p>
               </section>
 
@@ -156,14 +211,17 @@ const MentionsLegales = () => {
                   Contact
                 </h2>
                 <p className="text-slate-600">
-                  Pour toute question concernant ces mentions légales ou le fonctionnement du site, vous pouvez nous contacter via le <a href="/contact" className="text-fr-blue hover:underline">formulaire de contact</a>.
+                  Pour toute question concernant ces mentions légales ou le fonctionnement du site, vous pouvez nous contacter via le{' '}
+                  <a href="/contact" className="text-fr-blue hover:underline">formulaire de contact</a>
+                  {' '}ou à l'adresse{' '}
+                  <ObfuscatedEmail email={contactEmail} testId="legal-email-contact" />.
                 </p>
               </section>
 
               {/* Date */}
               <section className="pt-8 border-t border-slate-200">
                 <p className="text-slate-500 text-sm">
-                  Dernière mise à jour : Janvier 2026
+                  Dernière mise à jour : Février 2026
                 </p>
               </section>
             </div>

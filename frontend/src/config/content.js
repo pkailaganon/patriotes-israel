@@ -17,6 +17,7 @@ export const siteConfig = {
 export const assets = {
   candidateMichel: "https://customer-assets.emergentagent.com/job_2934571f-b89c-4ca8-a056-0a3b936c2d41/artifacts/c3bsf8tv_IMG_0404.jpeg",
   logoMain: "https://customer-assets.emergentagent.com/job_ayach-2026/artifacts/y4unrepu_Patriotes.png",
+  logoCircle: "/images/logos/logo-circle.webp",
   logoDates: "https://customer-assets.emergentagent.com/job_ayach-2026/artifacts/n6zs7mi0_IMG_0569.jpeg",
 };
 
