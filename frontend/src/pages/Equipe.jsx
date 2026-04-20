@@ -99,7 +99,7 @@ const Equipe = () => {
                 <p className="text-white/90 text-lg leading-relaxed">
                   {headCandidate.bioFull}
                 </p>
-                <Link to={`/equipe/${headCandidate.slug}`}>
+                <Link to={`/equipe/${headCandidate.slug}`} className="inline-block pt-2">
                   <Button className="bg-white text-[#13244b] hover:bg-slate-100 font-bold uppercase tracking-wider">
                     Lire mon engagement complet
                     <ArrowRight className="ml-2 w-5 h-5" />
