@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { EyeOff, Coins, ShieldOff, ArrowRight } from 'lucide-react';
 import { Layout } from '../components/Layout';
+import { SEO } from '../components/SEO';
 import { pourquoiNousCards } from '../config/content';
 import { Button } from '../components/ui/button';
 
@@ -19,6 +20,10 @@ const fadeInUp = {
 const PourquoiNous = () => {
   return (
     <Layout>
+      <SEO
+        title="Pourquoi nous — Diagnostic des sortants — Liste N°6"
+        description="Diagnostic factuel des élus sortants et de leur bilan. Pourquoi la liste N°6 « Avec les Patriotes d'Israël » s'impose pour les Français de Tel-Aviv et Haïfa."
+      />
       {/* Hero */}
       <section className="py-16 md:py-24 bg-slate-50 border-b border-slate-200" data-testid="pourquoi-hero">
         <div className="container-campaign">

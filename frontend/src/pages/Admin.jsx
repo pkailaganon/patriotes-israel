@@ -279,7 +279,10 @@ const ContactsTable = ({ auth }) => {
 
 const DonationsTable = ({ auth }) => {
   const [donations, setDonations] = useState([]);
-  const [stats, setStats] = useState({ totalDonations: 0, completedDonations: 0, totalAmountILS: 0, totalAmountEUR: 0 });
+  const [stats, setStats] = useState({
+    totalDonations: 0, completedDonations: 0, pendingDonations: 0, failedDonations: 0,
+    byCurrency: {},
+  });
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState('');
 
@@ -288,12 +291,12 @@ const DonationsTable = ({ auth }) => {
   const fetchDonations = async () => {
     setLoading(true);
     try {
-      const url = statusFilter 
+      const url = statusFilter
         ? `${API}/admin/donations?status=${statusFilter}`
         : `${API}/admin/donations`;
       const response = await fetch(url, { headers: authHeader });
       const data = await response.json();
-      setDonations(data);
+      setDonations(Array.isArray(data) ? data : []);
     } catch (error) {
       toast.error('Erreur de chargement');
     }
@@ -313,56 +316,105 @@ const DonationsTable = ({ auth }) => {
   useEffect(() => {
     fetchDonations();
     fetchStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
+
+  const handleExportCSV = () => {
+    const url = `${API}/admin/donations/export.csv`;
+    // Use fetch to include auth, then trigger download
+    fetch(url, { headers: authHeader })
+      .then(r => r.blob())
+      .then(blob => {
+        const href = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = href;
+        a.download = `dons-cnccfp-${new Date().toISOString().slice(0, 10)}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(href);
+      })
+      .catch(() => toast.error("Erreur d'export"));
+  };
 
   const getStatusBadge = (status) => {
     const styles = {
       completed: 'bg-green-100 text-green-700',
       pending: 'bg-yellow-100 text-yellow-700',
-      failed: 'bg-red-100 text-red-700'
+      failed: 'bg-red-100 text-red-700',
     };
     const labels = {
       completed: 'Complété',
       pending: 'En attente',
-      failed: 'Échoué'
+      failed: 'Échoué',
     };
     return (
-      <span className={`text-xs px-2 py-1 rounded ${styles[status]}`}>
-        {labels[status]}
+      <span className={`text-xs px-2 py-1 rounded ${styles[status] || 'bg-slate-100 text-slate-700'}`}>
+        {labels[status] || status || '—'}
       </span>
     );
   };
+
+  const currencySymbol = (c) => ({ EUR: '€', USD: '$', ILS: '₪' }[c] || c);
+
+  // Render per-currency totals summary
+  const byCurrencyEntries = Object.entries(stats.byCurrency || {});
 
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <StatsCard icon={CreditCard} label="Total Dons" value={stats.totalDonations} />
-        <StatsCard icon={Check} label="Complétés" value={stats.completedDonations} color="green" />
-        <StatsCard 
-          icon={CreditCard} 
-          label="Montant Total" 
-          value={`₪${stats.totalAmountILS.toLocaleString()}`}
-          subValue={`~€${stats.totalAmountEUR.toLocaleString()}`}
-          color="il-blue"
-        />
+        <StatsCard icon={Check} label="Complétés" value={stats.completedDonations} color="il-blue" />
+        <StatsCard icon={CreditCard} label="En attente" value={stats.pendingDonations} color="campaign-gold" />
+        <StatsCard icon={CreditCard} label="Échoués" value={stats.failedDonations} color="republic-red" />
       </div>
 
+      {byCurrencyEntries.length > 0 && (
+        <div className="bg-white p-4 border border-slate-200 mb-6">
+          <p className="text-xs uppercase tracking-wider text-slate-500 mb-3 font-bold">
+            Montant collecté (complétés)
+          </p>
+          <div className="flex flex-wrap gap-6">
+            {byCurrencyEntries.map(([cur, info]) => (
+              <div key={cur} data-testid={`currency-total-${cur.toLowerCase()}`}>
+                <div className="text-2xl font-bold text-slate-900">
+                  {currencySymbol(cur)}{Number(info.total).toLocaleString('fr-FR')}
+                </div>
+                <div className="text-xs text-slate-500">
+                  {cur} · {info.count} don{info.count > 1 ? 's' : ''}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="bg-white border border-slate-200">
-        <div className="p-4 border-b border-slate-200 flex justify-between items-center">
+        <div className="p-4 border-b border-slate-200 flex flex-wrap justify-between items-center gap-3">
           <h2 className="font-bold text-slate-900">Liste des dons</h2>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
               className="border border-slate-200 rounded px-3 py-1 text-sm"
+              data-testid="donations-status-filter"
             >
               <option value="">Tous</option>
               <option value="completed">Complétés</option>
               <option value="pending">En attente</option>
               <option value="failed">Échoués</option>
             </select>
-            <Button variant="outline" size="sm" onClick={fetchDonations}>
+            <Button variant="outline" size="sm" onClick={fetchDonations} data-testid="donations-refresh">
               <RefreshCw className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExportCSV}
+              className="text-fr-blue border-fr-blue hover:bg-fr-blue hover:text-white"
+              data-testid="donations-export-csv"
+            >
+              Export CSV (CNCCFP)
             </Button>
           </div>
         </div>
@@ -376,46 +428,57 @@ const DonationsTable = ({ auth }) => {
             <table className="w-full">
               <thead className="bg-slate-50 text-left">
                 <tr>
-                  <th className="p-3 text-xs uppercase tracking-wider text-slate-500 font-bold">Référence</th>
-                  <th className="p-3 text-xs uppercase tracking-wider text-slate-500 font-bold">Donateur</th>
-                  <th className="p-3 text-xs uppercase tracking-wider text-slate-500 font-bold">Email</th>
-                  <th className="p-3 text-xs uppercase tracking-wider text-slate-500 font-bold">Montant</th>
-                  <th className="p-3 text-xs uppercase tracking-wider text-slate-500 font-bold">Statut</th>
                   <th className="p-3 text-xs uppercase tracking-wider text-slate-500 font-bold">Date</th>
+                  <th className="p-3 text-xs uppercase tracking-wider text-slate-500 font-bold">Donateur</th>
+                  <th className="p-3 text-xs uppercase tracking-wider text-slate-500 font-bold">Contact</th>
+                  <th className="p-3 text-xs uppercase tracking-wider text-slate-500 font-bold">Montant</th>
+                  <th className="p-3 text-xs uppercase tracking-wider text-slate-500 font-bold">Preset</th>
+                  <th className="p-3 text-xs uppercase tracking-wider text-slate-500 font-bold">Statut</th>
+                  <th className="p-3 text-xs uppercase tracking-wider text-slate-500 font-bold">PayPal</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {donations.map((donation) => (
-                  <tr key={donation.id} className="hover:bg-slate-50">
-                    <td className="p-3 font-mono text-sm">{donation.paymentReference}</td>
-                    <td className="p-3">
-                      {donation.firstName && donation.lastName 
-                        ? `${donation.firstName} ${donation.lastName}`
-                        : <span className="text-slate-400">-</span>
-                      }
-                    </td>
-                    <td className="p-3 text-sm">
-                      {donation.email || <span className="text-slate-400">-</span>}
-                    </td>
-                    <td className="p-3 font-bold">
-                      {donation.currency === 'EUR' ? '€' : '₪'}{donation.amount}
-                      {donation.currency === 'EUR' && (
-                        <span className="text-slate-400 font-normal text-sm ml-1">
-                          (₪{donation.amountILS})
-                        </span>
-                      )}
-                    </td>
-                    <td className="p-3">{getStatusBadge(donation.status)}</td>
-                    <td className="p-3 text-sm text-slate-500">
-                      {new Date(donation.createdAt).toLocaleDateString('fr-FR', {
-                        day: 'numeric',
-                        month: 'short',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })}
-                    </td>
-                  </tr>
-                ))}
+                {donations.map((d) => {
+                  const donor = d.donor || {};
+                  const dateStr = d.created_at
+                    ? new Date(d.created_at).toLocaleDateString('fr-FR', {
+                        day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
+                      })
+                    : '—';
+                  return (
+                    <tr key={d.id} className="hover:bg-slate-50" data-testid={`donation-row-${d.id}`}>
+                      <td className="p-3 text-sm text-slate-500">{dateStr}</td>
+                      <td className="p-3">
+                        {donor.firstName || donor.lastName
+                          ? `${donor.firstName || ''} ${donor.lastName || ''}`.trim()
+                          : <span className="text-slate-400">—</span>}
+                        {donor.city && (
+                          <div className="text-xs text-slate-400">{donor.city}, {donor.country}</div>
+                        )}
+                      </td>
+                      <td className="p-3 text-sm">
+                        {donor.email ? (
+                          <div>
+                            <div>{donor.email}</div>
+                            {donor.phone && <div className="text-xs text-slate-400">{donor.phone}</div>}
+                          </div>
+                        ) : <span className="text-slate-400">—</span>}
+                      </td>
+                      <td className="p-3 font-bold">
+                        {currencySymbol(d.currency)}{Number(d.amount || 0).toLocaleString('fr-FR')}
+                      </td>
+                      <td className="p-3 text-sm">
+                        {d.impact_preset
+                          ? <span className="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-xs">{d.impact_preset} €</span>
+                          : <span className="text-slate-400">libre</span>}
+                      </td>
+                      <td className="p-3">{getStatusBadge(d.status)}</td>
+                      <td className="p-3 font-mono text-xs text-slate-500 break-all max-w-[180px]">
+                        {d.paypal_order_id || '—'}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

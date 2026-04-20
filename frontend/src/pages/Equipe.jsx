@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, User } from 'lucide-react';
 import { Layout } from '../components/Layout';
+import { SEO } from '../components/SEO';
 import { CandidateModal } from '../components/CandidateModal';
 import { candidatesList, assets } from '../config/content';
 import { Button } from '../components/ui/button';
@@ -26,6 +27,10 @@ const Equipe = () => {
 
   return (
     <Layout>
+      <SEO
+        title="L'équipe — 18 candidats de la Liste N°6 — Patriotes d'Israël"
+        description="Découvrez les 18 candidats de la liste « Avec les Patriotes d'Israël » pour les élections consulaires 2026 (Tel-Aviv / Haïfa)."
+      />
       {/* Hero */}
       <section className="py-16 md:py-24 bg-slate-50 border-b border-slate-200" data-testid="equipe-hero">
         <div className="container-campaign">

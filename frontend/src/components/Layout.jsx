@@ -56,7 +56,7 @@ export const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8" data-testid="desktop-nav">
+          <nav className="hidden xl:flex items-center gap-8" data-testid="desktop-nav">
             {navigation.map((item) => (
               <Link
                 key={item.path}
@@ -89,7 +89,7 @@ export const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2 text-white hover:text-white/80 transition-colors"
+            className="xl:hidden p-2 text-white hover:text-white/80 transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             data-testid="mobile-menu-toggle"
             aria-label="Menu"
@@ -106,7 +106,7 @@ export const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-[#27428F] border-t border-white/20 overflow-hidden"
+            className="xl:hidden bg-[#27428F] border-t border-white/20 overflow-hidden"
             data-testid="mobile-menu"
           >
             <nav className="container-campaign py-4 flex flex-col gap-2">

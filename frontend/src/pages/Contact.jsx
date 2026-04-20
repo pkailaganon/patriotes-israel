@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, CheckCircle2, Mail, MapPin } from 'lucide-react';
 import { Layout } from '../components/Layout';
+import { SEO } from '../components/SEO';
 import { contact, assets } from '../config/content';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -92,6 +93,10 @@ const Contact = () => {
   if (isSubmitted) {
     return (
       <Layout>
+        <SEO
+          title="Contact — Avec les Patriotes d'Israël"
+          description="Contactez la liste N°6 « Avec les Patriotes d'Israël » pour soutenir la campagne, aider à l'inscription LEC ou poser vos questions."
+        />
         <section className="section-spacing bg-slate-50" data-testid="contact-success">
           <div className="container-campaign">
             <motion.div
@@ -135,6 +140,10 @@ const Contact = () => {
 
   return (
     <Layout>
+      <SEO
+        title="Contact — Avec les Patriotes d'Israël"
+        description="Contactez la liste N°6 « Avec les Patriotes d'Israël » pour soutenir la campagne, aider à l'inscription LEC ou poser vos questions."
+      />
       {/* Hero */}
       <section className="py-16 md:py-20 bg-slate-50 border-b border-slate-200" data-testid="contact-hero">
         <div className="container-campaign">

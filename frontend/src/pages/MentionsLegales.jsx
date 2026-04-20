@@ -1,9 +1,14 @@
 import { motion } from 'framer-motion';
 import { Layout } from '../components/Layout';
+import { SEO } from '../components/SEO';
 
 const MentionsLegales = () => {
   return (
     <Layout>
+      <SEO
+        title="Mentions légales — Avec les Patriotes d'Israël"
+        description="Mentions légales et informations sur le responsable de publication de la campagne « Avec les Patriotes d'Israël » — Liste N°6."
+      />
       <section className="section-spacing bg-slate-50" data-testid="mentions-legales">
         <div className="container-campaign">
           <motion.div
