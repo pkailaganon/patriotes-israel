@@ -255,7 +255,7 @@ export const candidatesList = [
     numero: 1,
     nom: "Professeur Michael Ayache",
     slug: "michael-ayache",
-    photo: "/images/candidates/01-ayache.webp",
+    photo: "https://customer-assets.emergentagent.com/job_2934571f-b89c-4ca8-a056-0a3b936c2d41/artifacts/c3bsf8tv_IMG_0404.jpeg",
     accroche: "Tête de liste — Professeur, engagé pour une représentation consulaire fidèle aux Français d'Israël",
     bioFull: "Chers Français d'Israël, je suis le professeur Michael Ayache et j'ai accepté de conduire la liste « Avec les Patriotes d'Israël » pour les élections consulaires à Tel-Aviv / Haïfa. Notre liste est indépendante des partis : notre seule boussole, ce sont les Français qui vivent en Israël et leurs intérêts, dans le respect profond de l'État d'Israël et de sa souveraineté. Je vous invite à lire mon engagement complet.",
     isHead: true,
