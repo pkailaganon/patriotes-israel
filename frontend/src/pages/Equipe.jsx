@@ -111,6 +111,48 @@ const Equipe = () => {
         </section>
       )}
 
+      {/* Campaign photos gallery */}
+      <section className="py-16 md:py-20 bg-slate-50" data-testid="equipe-gallery">
+        <div className="container-campaign">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-10 md:mb-12"
+          >
+            <span className="inline-block bg-fr-blue/10 text-fr-blue px-4 py-2 text-xs uppercase tracking-widest font-bold mb-4">
+              Une équipe soudée
+            </span>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-slate-900">
+              Réunis pour défendre les Français d'Israël
+            </h2>
+          </motion.div>
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
+            {[
+              { src: "/images/campaign/equipe-01.webp", alt: "Membres de la liste Avec les Patriotes d'Israël" },
+              { src: "/images/campaign/equipe-02.webp", alt: "Équipe complète de la liste N°6" },
+            ].map((photo, i) => (
+              <motion.figure
+                key={photo.src}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15 }}
+                className="overflow-hidden shadow-xl bg-white"
+                data-testid={`equipe-photo-${i + 1}`}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  className="w-full h-full object-cover aspect-square md:aspect-[4/3] hover:scale-105 transition-transform duration-500"
+                />
+              </motion.figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Colistiers Grid */}
       <section className="section-spacing bg-white" data-testid="colistiers-grid">
         <div className="container-campaign">

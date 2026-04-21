@@ -38,7 +38,7 @@ export const hero = {
   tagline: "Liste N°6 — Le renouveau pour vous défendre",
   subtitle: "Élections consulaires 2026",
   regions: "Deuxième circonscription d'Israël · Tel-Aviv & Haïfa",
-  description: "Cette liste présente le renouveau pour vous défendre, avec nos valeurs juives, sionistes et patriotes. Votez et faites voter pour vos conseillers Patriotes d'Israël, à votre écoute et pour défendre vos intérêts franco-israéliens.",
+  description: "Cette liste présente le renouveau pour vous défendre, avec nos valeurs juives, sionistes et patriotes. Cette liste est indépendante des partis. Votez et faites voter pour vos conseillers Patriotes d'Israël, à votre écoute et pour défendre vos intérêts franco-israéliens.",
   cta: "Découvrir comment voter",
   ctaLink: "/comment-voter",
   ctaSecondary: "Notre programme",
