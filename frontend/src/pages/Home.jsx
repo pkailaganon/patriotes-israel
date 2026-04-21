@@ -109,6 +109,13 @@ const Home = () => {
                     {hero.ctaSecondary}
                   </Button>
                 </Link>
+                {/* Mobile-only: Soutenir la campagne */}
+                <Link to="/soutenir" className="sm:hidden">
+                  <Button className="w-full bg-republic-red hover:bg-republic-red/90 text-white font-bold" data-testid="hero-cta-soutenir-mobile">
+                    <Heart className="mr-2 w-5 h-5" fill="currentColor" />
+                    Soutenir la campagne
+                  </Button>
+                </Link>
               </motion.div>
             </motion.div>
 
