@@ -111,7 +111,7 @@ const Home = () => {
                 </Link>
                 {/* Mobile-only: Soutenir la campagne */}
                 <Link to="/soutenir" className="sm:hidden">
-                  <Button className="w-full bg-republic-red hover:bg-republic-red/90 text-white font-bold" data-testid="hero-cta-soutenir-mobile">
+                  <Button className="w-full px-8 py-3 bg-republic-red hover:bg-republic-red/90 text-white font-bold uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg rounded-sm" data-testid="hero-cta-soutenir-mobile">
                     <Heart className="mr-2 w-5 h-5" fill="currentColor" />
                     Soutenir la campagne
                   </Button>
