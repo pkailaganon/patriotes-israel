@@ -58,7 +58,7 @@ export const keyFigures = [
 export const fiveValues = [
   { title: "Juifs", icon: "Star", description: "Fiers de notre identité" },
   { title: "Sionistes", icon: "Flag", description: "Engagés pour Israël" },
-  { title: "Patriotes", icon: "Heart", description: "Attachés à la France et à Israël" },
+  { title: "Patriotes", icon: "Heart", description: "Patriotes d'Israël" },
   { title: "Transparents", icon: "Eye", description: "Publication des PV et bilans" },
   { title: "Indépendants", icon: "Unlink", description: "Aucune affiliation partisane" },
 ];
