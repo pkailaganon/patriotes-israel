@@ -17,7 +17,7 @@ const PAYPAL_CLIENT_ID = process.env.REACT_APP_PAYPAL_CLIENT_ID || '';
 const FRONTEND_DONATIONS_ENABLED =
   (process.env.REACT_APP_DONATIONS_ENABLED || 'true').toLowerCase() === 'true';
 
-const PRESETS = [26, 52, 104, 260];
+const PRESETS = [260, 520, 1040, 2600];
 
 const CURRENCIES = [
   { code: 'ILS', symbol: '₪', min: 1, max: 20000 },
@@ -250,7 +250,7 @@ const Soutenir = () => {
 
   // Form state
   const [currency, setCurrency] = useState('ILS');
-  const [selectedPreset, setSelectedPreset] = useState(52);
+  const [selectedPreset, setSelectedPreset] = useState(520);
   const [customAmount, setCustomAmount] = useState('');
 
   const [donor, setDonor] = useState({

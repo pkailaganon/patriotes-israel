@@ -52,7 +52,7 @@ LIMITS = {
     "ILS": {"min": 1, "max": 20000},
 }
 
-ALLOWED_PRESETS = [26, 52, 104, 260]
+ALLOWED_PRESETS = [260, 520, 1040, 2600]
 
 # Map of common country names (FR + EN) to ISO 3166-1 alpha-2 codes.
 # Used to pre-fill the PayPal `payer.address.country_code` so donors aren't
