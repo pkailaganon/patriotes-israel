@@ -186,10 +186,10 @@ class DonorIdentity(BaseModel):
     lastName: str = Field(..., min_length=1, max_length=100)
     email: EmailStr
     phone: Optional[str] = Field(None, max_length=40)
-    address: str = Field(..., min_length=2, max_length=200)
-    city: str = Field(..., min_length=1, max_length=100)
-    postalCode: str = Field(..., min_length=1, max_length=20)
-    country: str = Field(..., min_length=2, max_length=80)
+    address: Optional[str] = Field(None, max_length=200)
+    city: Optional[str] = Field(None, max_length=100)
+    postalCode: Optional[str] = Field(None, max_length=20)
+    country: Optional[str] = Field(None, max_length=80)
 
 class CreateOrderInput(BaseModel):
     amount: float = Field(..., gt=0)
@@ -364,12 +364,6 @@ async def paypal_create_order(request: Request, payload: CreateOrderInput):
                 "surname": payload.donor.lastName,
             },
             "email_address": payload.donor.email,
-            "address": {
-                "address_line_1": payload.donor.address,
-                "admin_area_2": payload.donor.city,
-                "postal_code": payload.donor.postalCode,
-                "country_code": country_to_iso(payload.donor.country),
-            },
         },
         "application_context": {
             "brand_name": "Patriotes d'Israël",

@@ -159,7 +159,7 @@ const IdentityForm = ({ donor, setDonor }) => {
   const field = (name, label, opts = {}) => (
     <div>
       <Label htmlFor={name} className="text-xs uppercase tracking-wider font-bold text-slate-700">
-        {label} <span className="text-republic-red">*</span>
+        {label} {opts.required !== false && <span className="text-republic-red">*</span>}
       </Label>
       <Input
         id={name}
@@ -179,12 +179,7 @@ const IdentityForm = ({ donor, setDonor }) => {
         {field('lastName', 'Nom', { autoComplete: 'family-name' })}
       </div>
       {field('email', 'Email', { type: 'email', autoComplete: 'email' })}
-      {field('address', 'Adresse', { autoComplete: 'street-address' })}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {field('postalCode', 'Code postal', { autoComplete: 'postal-code' })}
-        <div className="md:col-span-2">{field('city', 'Ville', { autoComplete: 'address-level2' })}</div>
-      </div>
-      {field('country', 'Pays', { autoComplete: 'country-name' })}
+      {field('phone', 'Téléphone', { type: 'tel', autoComplete: 'tel' })}
     </div>
   );
 };
@@ -232,30 +227,13 @@ const Soutenir = () => {
   const [config, setConfig] = useState(null);
   const [configLoading, setConfigLoading] = useState(true);
 
-  // Detect default country from browser locale (fallback: Israël)
-  const detectCountry = () => {
-    try {
-      const lang = (navigator.language || 'fr-IL').toLowerCase();
-      const region = lang.split('-')[1];
-      const map = {
-        il: 'Israël', fr: 'France', be: 'Belgique', ch: 'Suisse',
-        ca: 'Canada', lu: 'Luxembourg', gb: 'Royaume-Uni', us: 'États-Unis',
-        de: 'Allemagne', es: 'Espagne', it: 'Italie', pt: 'Portugal',
-      };
-      return map[region] || 'Israël';
-    } catch {
-      return 'Israël';
-    }
-  };
-
   // Form state
   const [currency, setCurrency] = useState('ILS');
   const [selectedPreset, setSelectedPreset] = useState(520);
   const [customAmount, setCustomAmount] = useState('');
 
   const [donor, setDonor] = useState({
-    firstName: '', lastName: '', email: '',
-    address: '', city: '', postalCode: '', country: detectCountry(),
+    firstName: '', lastName: '', email: '', phone: '',
   });
   const [accepts, setAccepts] = useState({
     acceptPhysicalPerson: false,
@@ -284,8 +262,7 @@ const Soutenir = () => {
   const cur = CURRENCY_MAP[currency];
   const amountValid = amount >= cur.min && amount <= cur.max;
   const identityValid = !!(
-    donor.firstName && donor.lastName && donor.email &&
-    donor.address && donor.city && donor.postalCode && donor.country
+    donor.firstName && donor.lastName && donor.email && donor.phone
   );
   const allAccepted = accepts.acceptPhysicalPerson && accepts.acceptPersonalFunds && accepts.acceptDataCollection;
   const canPay = amountValid && identityValid && allAccepted;
