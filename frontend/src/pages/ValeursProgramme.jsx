@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Download } from 'lucide-react';
 import { Layout } from '../components/Layout';
 import { SEO } from '../components/SEO';
 import { valuesDetailed, actionSheets, assets } from '../config/content';
@@ -33,9 +33,15 @@ const ValeursProgramme = () => {
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4">
                 Juifs, Sionistes, Patriotes
               </h1>
-              <p className="text-xl md:text-2xl text-fr-blue font-medium">
+              <p className="text-xl md:text-2xl text-fr-blue font-medium mb-6">
                 5 valeurs, 5 fiches action
               </p>
+              <a href="/profession-de-foi.pdf" target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" className="btn-secondary">
+                  <Download className="mr-2 w-5 h-5" />
+                  Profession de Foi (PDF)
+                </Button>
+              </a>
             </motion.div>
             <motion.img
               initial={{ opacity: 0, scale: 0.9 }}

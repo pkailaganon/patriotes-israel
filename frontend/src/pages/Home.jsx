@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { 
+import {
   ArrowRight, Star, Flag, Heart, Eye, Unlink,
-  AlertCircle, FileText, Vote, Users
+  AlertCircle, FileText, Vote, Users, Download
 } from 'lucide-react';
 import { Layout } from '../components/Layout';
 import { SEO } from '../components/SEO';
@@ -97,25 +97,35 @@ const Home = () => {
               </motion.p>
 
               {/* CTA Buttons */}
-              <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-3">
-                <Link to={hero.ctaLink}>
-                  <Button className="btn-accent w-full sm:w-auto" data-testid="hero-cta-primary">
-                    {hero.cta}
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
-                </Link>
-                <Link to={hero.ctaSecondaryLink}>
-                  <Button variant="outline" className="btn-secondary w-full sm:w-auto" data-testid="hero-cta-secondary">
-                    {hero.ctaSecondary}
-                  </Button>
-                </Link>
-                {/* Mobile-only: Soutenir la campagne */}
-                <Link to="/soutenir" className="sm:hidden">
-                  <Button className="w-full px-8 py-3 bg-republic-red hover:bg-republic-red/90 text-white font-bold uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg rounded-sm" data-testid="hero-cta-soutenir-mobile">
-                    <Heart className="mr-2 w-5 h-5" fill="currentColor" />
-                    Soutenir la campagne
-                  </Button>
-                </Link>
+              <motion.div variants={fadeInUp} className="flex flex-col gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Link to={hero.ctaLink}>
+                    <Button className="btn-accent w-full sm:w-auto" data-testid="hero-cta-primary">
+                      {hero.cta}
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                  </Link>
+                  <Link to={hero.ctaSecondaryLink}>
+                    <Button variant="outline" className="btn-secondary w-full sm:w-auto" data-testid="hero-cta-secondary">
+                      {hero.ctaSecondary}
+                    </Button>
+                  </Link>
+                  {/* Mobile-only: Soutenir la campagne */}
+                  <Link to="/soutenir" className="sm:hidden">
+                    <Button className="w-full px-8 py-3 bg-republic-red hover:bg-republic-red/90 text-white font-bold uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg rounded-sm" data-testid="hero-cta-soutenir-mobile">
+                      <Heart className="mr-2 w-5 h-5" fill="currentColor" />
+                      Soutenir la campagne
+                    </Button>
+                  </Link>
+                </div>
+                <div>
+                  <a href="/profession-de-foi.pdf" target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" className="btn-secondary w-full sm:w-auto">
+                      <Download className="mr-2 w-5 h-5" />
+                      Profession de Foi (PDF)
+                    </Button>
+                  </a>
+                </div>
               </motion.div>
             </motion.div>
 

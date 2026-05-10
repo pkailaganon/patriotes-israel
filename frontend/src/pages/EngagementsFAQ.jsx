@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Download } from 'lucide-react';
 import { Layout } from '../components/Layout';
 import { SEO } from '../components/SEO';
 import { solemnCommitments, faqItems, lexicon } from '../config/content';
@@ -33,9 +33,15 @@ const EngagementsFAQ = () => {
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4">
               5 engagements solennels
             </h1>
-            <p className="text-xl md:text-2xl text-slate-600">
+            <p className="text-xl md:text-2xl text-slate-600 mb-6">
               Notre parole d'honneur aux Franco-Israéliens
             </p>
+            <a href="/profession-de-foi.pdf" target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" className="btn-secondary">
+                <Download className="mr-2 w-5 h-5" />
+                Profession de Foi (PDF)
+              </Button>
+            </a>
           </motion.div>
         </div>
       </section>
