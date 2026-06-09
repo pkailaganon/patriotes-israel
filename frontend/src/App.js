@@ -20,6 +20,7 @@ import SoutenirMerci from "./pages/SoutenirMerci";
 import Contact from "./pages/Contact";
 import MentionsLegales from "./pages/MentionsLegales";
 import Admin from "./pages/Admin";
+import YooriMockup from "./pages/YooriMockup";
 
 function App() {
   return (
@@ -51,6 +52,9 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/admin" element={<Admin />} />
+
+          {/* Aperçu mockup Yoori (document HTML autonome en iframe) */}
+          <Route path="/yoori" element={<YooriMockup />} />
 
           {/* Redirections 301 (anciennes URLs → nouvelles) */}
           <Route path="/programme" element={<Navigate to="/valeurs-programme" replace />} />
